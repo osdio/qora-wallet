@@ -3,19 +3,17 @@ import React, {
     PropTypes,
     Component,
     StyleSheet,
-    Text
+    Text,
+    Dimensions
 } from 'react-native';
+import TabBarNavigator from 'react-native-tabbar-navigator';
 
 
 class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text onPress={()=>{
-                    this.props.actions.toast('test');
-                }}>
-                    home
-                </Text>
+
             </View>
         )
     }
@@ -24,10 +22,7 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
+        flex: 1
     }
 });
 
