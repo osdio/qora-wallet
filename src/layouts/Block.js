@@ -6,14 +6,15 @@ import React, {
     Text,
     Dimensions
 } from 'react-native';
-import TabBarNavigator from 'react-native-tabbar-navigator';
 
 
-class Home extends Component {
+class Block extends Component {
     render() {
         return (
             <View style={styles.container}>
-
+                <Text>
+                    Setting
+                </Text>
             </View>
         )
     }
@@ -22,7 +23,10 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 
@@ -31,4 +35,4 @@ export function mapStateToProps(state) {
     return state;
 }
 
-export const LayoutComponent = Home;
+export const LayoutComponent = Block;

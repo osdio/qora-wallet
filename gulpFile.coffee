@@ -7,7 +7,7 @@ devIp = require 'dev-ip'
 
 child_process = require 'child_process'
 
-appDelegateSrc = './ios/noder/AppDelegate.m'
+appDelegateSrc = './ios/bapp/AppDelegate.m'
 port = 8081
 
 
@@ -21,7 +21,7 @@ gulp.task 'replace', ->
     #  ip = 'localhost'
     gulp.src appDelegateSrc
     .pipe replace reg, "jsCodeLocation = [NSURL URLWithString:@\"http://#{ip}:#{port}/index.ios.bundle?platform=ios&dev=true\"];\n"
-    .pipe gulp.dest './ios/noder'
+    .pipe gulp.dest './ios/bapp'
 
 
 gulp.task 'package', (cb)->

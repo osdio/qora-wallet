@@ -8,72 +8,47 @@ import React,{
     Image,
     Dimensions
 } from 'react-native';
-import * as Home from './Home';
+import {Router, Route, Schema, Animations, TabBar} from 'react-native-router-flux'
 import * as UtilsComponent from './Utils';
-import Router from '../configs/Router';
 import connectComponent from '../utils/connectComponent';
+import * as Setting from './Setting';
+import * as Block from './Block';
+import * as Account from './Account';
 
 
 const Utils = connectComponent(UtilsComponent);
 const { height, width } = Dimensions.get('window');
-const initialRoute = {
-    name: 'home',
-    index: 0,
-    component: connectComponent(Home),
-    id: 0
-};
+
+
+class TabIcon extends React.Component {
+    render() {
+        return (
+            <Text style={{color: this.props.selected ? '#4845aa' :'black'}}>{this.props.title}</Text>
+        );
+    }
+}
 
 
 class Navigation extends Component {
-    constructor(props) {
-        super(props);
-        this.ids = [];
-    }
-
-
-    componentDidMount() {
-        this.navigator.navigationContext.addListener('didfocus', e => {
-            const { index, id } = e.data.route;
-            const haveFocused = this.ids.indexOf(id) > -1;
-            this[index] && this[index] && this[index].getWrappedInstance().componentDidFocus && this[index].getWrappedInstance().componentDidFocus(haveFocused);
-            !haveFocused && this.ids.push(id);
-        });
-    }
-
-
-    renderScene({ component, name, props, id, index }, navigator) {
-        this.router = this.router || new Router(navigator);
-        if (component) {
-            return React.createElement(component, {
-                ...props,
-                ref: view => this[index] = view,
-                router: this.router,
-                route: {
-                    name,
-                    id,
-                    index
-                }
-            });
-        }
-    }
-
-
-    configureScene(route) {
-        if (route.sceneConfig) {
-            return route.sceneConfig
-        }
-        return Navigator.SceneConfigs.FloatFromRight
-    }
-
-
     render() {
         return (
-            <View style={styles.bg}>
-                <Navigator
-                    ref={view => this.navigator=view}
-                    initialRoute={initialRoute}
-                    configureScene={this.configureScene.bind(this)}
-                    renderScene={this.renderScene.bind(this)}/>
+            <View style={styles.container}>
+                <Router hideNavBar={true}>
+                    <Schema name="tab" type="switch" icon={TabIcon}/>
+
+
+                    <Route name="tabbar" initial={true}>
+                        <Router footer={TabBar}
+                                showNavigationBar={false}
+                                titleStyle={styles.titleStyle}
+                                navigationBarStyle={styles.navigationBarStyle}
+                                tabBarStyle={styles.tabBarStyle}>
+                            <Route name="account" schema="tab" title="Account" component={connectComponent(Setting)}/>
+                            <Route name="block" schema="tab" title="Block" component={connectComponent(Block)}/>
+                            <Route name="setting" schema="tab" title="Setting" component={connectComponent(Setting)}/>
+                        </Router>
+                    </Route>
+                </Router>
                 <Utils/>
             </View>
         )
@@ -83,19 +58,22 @@ class Navigation extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
-    },
-    flexCenter: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    bg: {
         flex: 1,
         height,
-        width,
-        backgroundColor: 'transparent'
+        width
+    },
+    navigationBarStyle: {
+        backgroundColor: '#4845aa'
+    },
+    tabBarStyle: {
+        backgroundColor: 'rgba(0,0,0,0.03)',
+        borderTopColor: 'rgba(0,0,0,0.1)',
+        borderTopWidth: 1
+    },
+    titleStyle: {
+        color: 'white'
     }
+
 });
 
 
