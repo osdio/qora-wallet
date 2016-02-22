@@ -1,40 +1,29 @@
-# react-native-redux-kit
+# qora-wallet
 
-> A start kit for **react-native + redux** project. This project is abstract from [noder](https://github.com/soliury/noder-react-native).
+> A cross platform wallet for [qora](http://qora.org) build in react-native.
 
-# How to start it?
+## Notice
 
-```
-git clone https://github.com/soliury/react-native-redux-kit.git
-```
+Current, this project is in development. 
 
-Install the package:
+## Development
 
-```
-npm i
-```
-
-This project use **gulp** as a dev control tool. So make sure you have install the **gulp**.
-
-# Useful script
-
-### npm start
-
-This is equal to `gulp start`, it will replace the the bundle url in `AppDelegate.m`. It will auto find the local ip of your computer and fill it to the `AppDelegate.m`.
-
-If you want to change the `port` of bundle url, you can change the `port` in `gulpFile.coffee`:
+### Install
 
 ```
-port = 8080
+npm i 
+
 ```
 
-### gulp package
+### Run
 
-Just run react-native package script, This won't change the bundle url in `AppDelegate.m`.
+```
+gulp start
 
-# Files struct
+react-native run-ios
+```
 
-TBD
+
 
 
 
