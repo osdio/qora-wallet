@@ -8,7 +8,9 @@ import React,{
     Image,
     Dimensions
 } from 'react-native';
-import {Router, Route, Schema, Animations, TabBar} from 'react-native-router-flux'
+import { connect } from 'react-redux';
+import RNRF, {Route, Schema, Animations, TabBar} from 'react-native-router-flux';
+import TabIcon from '../components/base/TabIcon';
 import * as UtilsComponent from './Utils';
 import connectComponent from '../utils/connectComponent';
 import * as Setting from './Setting';
@@ -18,15 +20,7 @@ import * as Account from './Account';
 
 const Utils = connectComponent(UtilsComponent);
 const { height, width } = Dimensions.get('window');
-
-
-class TabIcon extends React.Component {
-    render() {
-        return (
-            <Text style={{color: this.props.selected ? '#4845aa' :'black'}}>{this.props.title}</Text>
-        );
-    }
-}
+const Router = connect()(RNRF.Router);
 
 
 class Navigation extends Component {
