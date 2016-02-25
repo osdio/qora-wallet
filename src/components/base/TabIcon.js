@@ -7,8 +7,6 @@ import React, {
 
 class TabIcon extends Component {
     static propTypes = {
-        selectedStyle: PropTypes.object,
-        style: PropTypes.object,
         selected: PropTypes.bool,
         title: PropTypes.string
     };
