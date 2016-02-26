@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "crypto-browserify": "^3.11.0",
-    "qora-core": "^0.1.2",
+    "qora-core": "^0.1.3",
     "query-string": "^3.0.0",
     "react-native": "^0.20.0",
     "react-native-button": "^1.4.2",

@@ -36,7 +36,14 @@ class EncryptWallet extends Component {
         if (text !== text2) {
             return actions.toast('两次输入密码不一致');
         }
-
+        actions.encryptWallet({
+            pwd: text,
+            wallet: this.props.wallet,
+            resolved: ()=> {
+                actions.toast('加密成功');
+                Actions.tabbar();
+            }
+        });
     }
 
 
@@ -74,7 +81,6 @@ class EncryptWallet extends Component {
                         placeholder="请再次输入密码"
                         selectionColor="#4845aa"
                         secureTextEntry={true}
-                        autoFocus={ true }
                     />
 
 

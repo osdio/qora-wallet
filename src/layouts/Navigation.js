@@ -35,7 +35,7 @@ class Navigation extends Component {
                     <Schema name="modal" sceneConfig={customFloatFromBottom}/>
 
 
-                    <Route name="create" schema="modal" initial={true}>
+                    <Route name="create" schema="modal" type="modal" initial={false}>
                         <Router titleStyle={styles.titleStyle}
                                 navigationBarStyle={styles.navigationBarStyle}>
                             <Route name="createModal1" initial={true} component={connectComponent(CreateWallet)}
@@ -47,7 +47,7 @@ class Navigation extends Component {
                     </Route>
 
 
-                    <Route name="tabbar" initial={false}>
+                    <Route name="tabbar" initial={true}>
                         <Router footer={TabBar}
                                 showNavigationBar={false}
                                 titleStyle={styles.titleStyle}

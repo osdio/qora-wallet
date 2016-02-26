@@ -23,8 +23,14 @@ export const createWallet = createAction(types.CREATE_WALLET, async ({pwd})=> {
 });
 
 
-export const encryptWallet = createAction(types.ENCRYPT_WALLET, async ({pwd})=> {
-
+export const encryptWallet = createAction(types.ENCRYPT_WALLET, async ({pwd, wallet})=> {
+    const encrypted = qora.core.encrypt(JSON.stringify(wallet), pwd);
+    return storage.setItem('wallet', encrypted);
+}, ({resolved, rejected})=> {
+    return {
+        resolved,
+        rejected
+    }
 });
 
 
