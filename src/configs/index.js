@@ -1,4 +1,4 @@
 export default {
-    domain: 'https://cnodejs.org',
-    apiPath: '/api/v1'
+    domain: 'http://lingyong.me:9090',
+    apiPath: ''
 }

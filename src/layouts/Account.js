@@ -6,14 +6,21 @@ import React, {
     Text,
     Dimensions
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 
 class Home extends Component {
+    componentDidMount() {
+    }
+
+
     render() {
         return (
             <View style={styles.container}>
-                <Text>
-                    Setting
+                <Text onPress={()=>{
+                    Actions.create({name:'asdfasdf'});
+                }}>
+                    Account
                 </Text>
             </View>
         )

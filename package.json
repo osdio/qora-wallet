@@ -8,12 +8,16 @@
     "build-ios": "react-native unbundle --entry-file index.ios.js --platform ios --dev false"
   },
   "dependencies": {
-    "qora-core": "^0.1.0",
+    "crypto-browserify": "^3.11.0",
+    "qora-core": "^0.1.2",
     "query-string": "^3.0.0",
     "react-native": "^0.20.0",
+    "react-native-button": "^1.4.2",
     "react-native-router-flux": "^2.2.7",
     "react-native-tabbar-navigator": "github:dickyt/react-native-tabbar-navigator",
+    "react-native-vector-icons": "^1.2.1",
     "react-redux": "^4.4.0",
+    "react-translate": "^3.0.4",
     "redux": "^3.0.3",
     "redux-actions": "^0.9.1",
     "redux-logger": "^2.5.2",

@@ -16,6 +16,9 @@ import connectComponent from '../utils/connectComponent';
 import * as Setting from './Setting';
 import * as Block from './Block';
 import * as Account from './Account';
+import * as CreateWallet from './CreateWallet';
+import * as EncryptWallet from './EncryptWallet';
+import { customFloatFromBottom } from '../configs/sceneConfig';
 
 
 const Utils = connectComponent(UtilsComponent);
@@ -29,15 +32,28 @@ class Navigation extends Component {
             <View style={styles.container}>
                 <Router hideNavBar={true}>
                     <Schema name="tab" type="switch" icon={TabIcon}/>
+                    <Schema name="modal" sceneConfig={customFloatFromBottom}/>
 
 
-                    <Route name="tabbar" initial={true}>
+                    <Route name="create" schema="modal" initial={true}>
+                        <Router titleStyle={styles.titleStyle}
+                                navigationBarStyle={styles.navigationBarStyle}>
+                            <Route name="createModal1" initial={true} component={connectComponent(CreateWallet)}
+                                   schema="modal"
+                                   title="Create Wallet"/>
+                            <Route name="createModal2" component={connectComponent(EncryptWallet)}
+                                   title="Encrypt Wallet"/>
+                        </Router>
+                    </Route>
+
+
+                    <Route name="tabbar" initial={false}>
                         <Router footer={TabBar}
                                 showNavigationBar={false}
                                 titleStyle={styles.titleStyle}
                                 navigationBarStyle={styles.navigationBarStyle}
                                 tabBarStyle={styles.tabBarStyle}>
-                            <Route name="account" schema="tab" title="Account" component={connectComponent(Setting)}/>
+                            <Route name="account" schema="tab" title="Account" component={connectComponent(Account)}/>
                             <Route name="block" schema="tab" title="Block" component={connectComponent(Block)}/>
                             <Route name="setting" schema="tab" title="Setting" component={connectComponent(Setting)}/>
                         </Router>

@@ -13,7 +13,7 @@ class Block extends Component {
         return (
             <View style={styles.container}>
                 <Text>
-                    Setting
+                    Block
                 </Text>
             </View>
         )

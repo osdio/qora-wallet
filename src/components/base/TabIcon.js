@@ -3,6 +3,14 @@ import React, {
     PropTypes,
     Text
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+
+const iconNameMap = {
+    'Account': 'person',
+    'Block': 'ios-pulse-strong',
+    'Setting': 'ios-gear'
+};
 
 
 class TabIcon extends Component {
@@ -24,7 +32,7 @@ class TabIcon extends Component {
 
     render() {
         return (
-            <Text style={ this.props.selected ? this.props.selectedStyle : this.props.style }>{this.props.title}</Text>
+            <Icon size={26} name={iconNameMap[this.props.title]} style={ this.props.selected ? this.props.selectedStyle : this.props.style }/>
         );
     }
 }

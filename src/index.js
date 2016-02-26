@@ -1,5 +1,5 @@
 import React,{
-	Component
+    Component
 } from 'react-native';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
@@ -8,15 +8,16 @@ import Navigation from './layouts/Navigation';
 
 const store = configureStore();
 
+//console.log(global.crypto);
 
 class App extends Component {
-	render() {
-		return (
-			<Provider store={store}>
-				<Navigation/>
-			</Provider>
-		);
-	}
+    render() {
+        return (
+            <Provider store={store}>
+                <Navigation/>
+            </Provider>
+        );
+    }
 }
 
 
