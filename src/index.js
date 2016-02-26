@@ -8,7 +8,6 @@ import Navigation from './layouts/Navigation';
 
 const store = configureStore();
 
-//console.log(global.crypto);
 
 class App extends Component {
     render() {

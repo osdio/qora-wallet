@@ -2,27 +2,31 @@ import * as types from '../constants/ActionTypes';
 
 
 const initialState = {
-    createWalletPending: false,
-    getEncryptWalletError: false
+    address: null,
+    info: {}
 };
 
 
 export default function (state = initialState, action) {
-    const { meta={}, error } = action;
-    const { sequence={} } = meta;
-    const status = sequence.type;
+    const { payload = {}, meta = {}, error } = action;
+    const { sequence = {} } = meta;
+
+
+    if (sequence.type === 'start' || error) {
+        return state;
+    }
 
 
     switch (action.type) {
         case types.CREATE_WALLET:
             return {
                 ...state,
-                createWalletPending: status === 'start'
+                address: payload.account.address
             };
-        case types.GET_WALLET_FROM_STORAGE:
+        case types.GET_ADDRESS_INFO:
             return {
                 ...state,
-                getEncryptWalletError: error
+                info: payload
             };
         default:
             return state;

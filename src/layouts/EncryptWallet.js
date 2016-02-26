@@ -41,7 +41,7 @@ class EncryptWallet extends Component {
             wallet: this.props.wallet,
             resolved: ()=> {
                 actions.toast('加密成功');
-                Actions.tabbar();
+                Actions.pop(2);
             }
         });
     }

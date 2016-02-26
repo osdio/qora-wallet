@@ -34,6 +34,21 @@ export const encryptWallet = createAction(types.ENCRYPT_WALLET, async ({pwd, wal
 });
 
 
+export const getWalletFormStorage = createAction(types.GET_WALLET_FROM_STORAGE, ()=> {
+    return storage.getItem('wallet');
+}, ({resolved, rejected})=> {
+    return {
+        resolved,
+        rejected
+    }
+});
+
+
+export const decryptWallet = createAction(types.DECRYPTE_WALLET, ({encryptWallet, pwd})=> {
+    return qora.core.decrypt(encryptWallet, pwd);
+});
+
+
 export const getAddressInfo = createAction(types.GET_ADDRESS_INFO, wallet.getBalanceByAddress);
 
 

@@ -11,17 +11,24 @@ import { Actions } from 'react-native-router-flux';
 
 class Home extends Component {
     componentDidMount() {
+        const { actions } = this.props;
+        actions.getWalletFormStorage({
+            resolved: ()=> {
+                Actions.createWallet();
+            },
+            rejected: ()=> {
+                Actions.createWallet();
+            }
+        });
     }
 
 
     render() {
         return (
             <View style={styles.container}>
-                <Text onPress={()=>{
-                    Actions.create({name:'asdfasdf'});
-                }}>
-                    Account
-                </Text>
+                <View>
+
+                </View>
             </View>
         )
     }
@@ -30,16 +37,16 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
+        flex: 1
     }
 });
 
 
 export function mapStateToProps(state) {
-    return state;
+    return {
+        wallet: state.wallet,
+        walletUI: state.walletUI
+    };
 }
 
 export const LayoutComponent = Home;

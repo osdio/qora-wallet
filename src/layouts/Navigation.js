@@ -11,19 +11,19 @@ import React,{
 import { connect } from 'react-redux';
 import RNRF, {Route, Schema, Animations, TabBar} from 'react-native-router-flux';
 import TabIcon from '../components/base/TabIcon';
-import * as UtilsComponent from './Utils';
-import connectComponent from '../utils/connectComponent';
-import * as Setting from './Setting';
-import * as Block from './Block';
-import * as Account from './Account';
-import * as CreateWallet from './CreateWallet';
-import * as EncryptWallet from './EncryptWallet';
 import { customFloatFromBottom } from '../configs/sceneConfig';
+import connectComponent from '../utils/connectComponent';
+import Layouts from './index';
 
 
-const Utils = connectComponent(UtilsComponent);
 const { height, width } = Dimensions.get('window');
 const Router = connect()(RNRF.Router);
+
+
+let components = {};
+Object.keys(Layouts).forEach((key)=> {
+    components[key] = connectComponent(Layouts[key]);
+});
 
 
 class Navigation extends Component {
@@ -35,31 +35,33 @@ class Navigation extends Component {
                     <Schema name="modal" sceneConfig={customFloatFromBottom}/>
 
 
-                    <Route name="create" schema="modal" type="modal" initial={false}>
-                        <Router titleStyle={styles.titleStyle}
-                                navigationBarStyle={styles.navigationBarStyle}>
-                            <Route name="createModal1" initial={true} component={connectComponent(CreateWallet)}
-                                   schema="modal"
-                                   title="Create Wallet"/>
-                            <Route name="createModal2" component={connectComponent(EncryptWallet)}
-                                   title="Encrypt Wallet"/>
-                        </Router>
-                    </Route>
-
-
-                    <Route name="tabbar" initial={true}>
+                    <Route name="home" initial={true}>
                         <Router footer={TabBar}
                                 showNavigationBar={false}
                                 titleStyle={styles.titleStyle}
                                 navigationBarStyle={styles.navigationBarStyle}
                                 tabBarStyle={styles.tabBarStyle}>
-                            <Route name="account" schema="tab" title="Account" component={connectComponent(Account)}/>
-                            <Route name="block" schema="tab" title="Block" component={connectComponent(Block)}/>
-                            <Route name="setting" schema="tab" title="Setting" component={connectComponent(Setting)}/>
+                            <Route name="account" schema="tab" title="Account" component={components.Account}/>
+                            <Route name="block" schema="tab" title="Block" component={components.Block}/>
+                            <Route name="setting" schema="tab" title="Setting" component={components.Setting}/>
                         </Router>
                     </Route>
+
+
+                    <Route name="createWallet" type="push" schema="modal" initial={false}>
+                        <Router titleStyle={styles.titleStyle}
+                                navigationBarStyle={styles.navigationBarStyle}>
+                            <Route name="createModal1" initial={true} component={components.CreateWallet}
+                                   schema="modal"
+                                   title="Create Wallet"/>
+                            <Route name="createModal2" component={components.EncryptWallet}
+                                   title="Encrypt Wallet"/>
+                        </Router>
+                    </Route>
+
+
                 </Router>
-                <Utils/>
+                <components.Utils/>
             </View>
         )
     }

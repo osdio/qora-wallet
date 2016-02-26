@@ -3,7 +3,8 @@ import * as types from '../constants/ActionTypes';
 
 const initialState = {
     seed: null,
-    accounts: {}
+    account: null,
+    encryptWallet: null
 };
 
 
@@ -21,10 +22,23 @@ export default function (state = initialState, action) {
         case types.CREATE_WALLET:
             return {
                 ...state,
-                accounts: {
-                    0: payload.account
-                },
+                account: payload.account,
                 seed: payload.seed
+            };
+        case types.ENCRYPT_WALLET:
+            return {
+                ...state,
+                encryptWallet: payload
+            };
+        case types.DECRYPTE_WALLET:
+            return {
+                ...state,
+                wallet: payload
+            };
+        case types.GET_WALLET_FROM_STORAGE:
+            return {
+                ...state,
+                encryptWallet: payload
             };
         default:
             return state;
