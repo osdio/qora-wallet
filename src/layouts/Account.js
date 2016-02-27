@@ -11,14 +11,17 @@ import { Actions } from 'react-native-router-flux';
 
 class Home extends Component {
     componentDidMount() {
-        const { actions } = this.props;
+        const { actions, account } = this.props;
         actions.getWalletFormStorage({
             resolved: ()=> {
-                Actions.createWallet();
+                //Actions.createWallet();
             },
             rejected: ()=> {
                 Actions.createWallet();
             }
+        });
+        actions.getAddressInfoFromStorage(({ address })=> {
+            actions.getAddressInfo(address);
         });
     }
 
@@ -45,7 +48,8 @@ const styles = StyleSheet.create({
 export function mapStateToProps(state) {
     return {
         wallet: state.wallet,
-        walletUI: state.walletUI
+        walletUI: state.walletUI,
+        account: state.account
     };
 }
 
