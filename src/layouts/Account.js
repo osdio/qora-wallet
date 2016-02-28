@@ -4,9 +4,16 @@ import React, {
     Component,
     StyleSheet,
     Text,
-    Dimensions
+    Dimensions,
+    ScrollView,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
+import Spinner from '../components/base/Spinner';
+
+
+const { height, width } = Dimensions.get('window');
 
 
 class Home extends Component {
@@ -26,13 +33,104 @@ class Home extends Component {
     }
 
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <View>
-
+    _renderBlockInfo(lastBlock) {
+        if (lastBlock.height) {
+            return (
+                <View key="blockInfo" style={styles.blockInfo}>
+                    <Text key="last-block" style={styles.blockInfoText}>
+                        Last Block:
+                    </Text>
+                    <Text key="height" style={styles.blockInfoText}>
+                        {lastBlock.height}
+                    </Text>
+                    <Text key="block-info" style={styles.blockInfoText}>
+                        {
+                            lastBlock.timestamp && moment(new Date(lastBlock.timestamp)).startOf('second').fromNow()
+                        }
+                    </Text>
                 </View>
+            )
+        }
+        return (
+            <View key="blockInfo" style={styles.blockInfo}>
+                <Spinner/>
             </View>
+        )
+    }
+
+
+    render() {
+        const { info={} } = this.props.account;
+        const { lastBlock={} } = info;
+
+        return (
+            <ScrollView style={styles.container}>
+
+                { this._renderBlockInfo(lastBlock) }
+
+                <View key="wall" style={styles.wall}>
+                    <View style={styles.wallItem}>
+                        <Icon name="ios-paperplane" size={45} style={styles.wallItemText}/>
+                        <Text style={styles.wallItemText}>
+                            打款
+                        </Text>
+                    </View>
+
+                    <View style={styles.wallItem}>
+                        <Icon name="ios-circle-filled" size={45} style={styles.wallItemText}/>
+                        <Text style={styles.wallItemText}>
+                            余额
+                        </Text>
+                    </View>
+
+                    <View style={styles.wallItem}>
+                        <Icon name="arrow-swap" size={45} style={styles.wallItemText}/>
+                        <Text style={styles.wallItemText}>
+                            收款
+                        </Text>
+                    </View>
+                </View>
+                <View key="sub-wall" style={styles.subWall}>
+                    <Text style={styles.balance}>
+                        {info.balanceCheck}
+                    </Text>
+                </View>
+
+                <View key="sub-header" style={styles.subHeader}>
+                    <Text style={styles.subHeaderText}>
+                        Service
+                    </Text>
+                </View>
+
+
+                <View key="box-wrapper" style={styles.boxWrapper}>
+                    <View style={styles.box}>
+                        <Icon size={40} name="ios-world"/>
+                        <Text style={styles.boxText}>
+                            Name Service
+                        </Text>
+                    </View>
+                    <View style={styles.box}>
+                        <Icon size={40} name="ios-world"/>
+                        <Text style={styles.boxText}>
+                            Name Service
+                        </Text>
+                    </View>
+                    <View style={styles.box}>
+                        <Icon size={40} name="ios-world"/>
+                        <Text style={styles.boxText}>
+                            Name Service
+                        </Text>
+                    </View>
+                    <View style={styles.box}>
+                        <Icon size={40} name="ios-world"/>
+                        <Text style={styles.boxText}>
+                            Name Service
+                        </Text>
+                    </View>
+                </View>
+
+            </ScrollView>
         )
     }
 }
@@ -40,7 +138,75 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        marginTop: 64,
+        flexDirection: 'column',
+        marginBottom: 50
+    },
+    wall: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#ECF0F1',
+        paddingTop: 20,
+        paddingBottom: 10
+    },
+    wallItem: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    wallItemText: {
+        color: 'rgba(0,0,0,0.6)'
+    },
+    subWall: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        backgroundColor: '#ECF0F1',
+        paddingBottom: 10
+    },
+    balance: {
+        color: '#3498DB',
+        fontSize: 14
+    },
+    blockInfo: {
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        height: 30,
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(0,0,0,0.03)',
+        borderBottomColor: 'rgba(0,0,0,0.03)',
+        borderBottomWidth: 1
+    },
+    blockInfoText: {
+        fontSize: 13
+    },
+    subHeader: {
+        height: 35,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 20,
+        borderBottomColor: '#4845aa',
+        borderBottomWidth: 3
+    },
+    subHeaderText: {
+        color: '#34495E'
+    },
+    boxWrapper: {
+        height,
+        width,
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
+    box: {
+        width: width / 3,
+        height: width / 3,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 

@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
         width
     },
     navigationBarStyle: {
-        backgroundColor: '#4845aa'
+        backgroundColor: '#4845aa',
+        borderBottomWidth: 0
     },
     tabBarStyle: {
         backgroundColor: 'rgba(0,0,0,0.03)',

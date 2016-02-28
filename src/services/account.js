@@ -7,7 +7,6 @@ export function getBalanceByAddress(address) {
             addr: address
         })
         .then(data=> {
-            console.log(data);
             if (data.error) {
                 throw data.error;
             }
