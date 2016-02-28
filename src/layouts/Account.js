@@ -176,8 +176,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         height: 30,
-        borderTopWidth: 1,
-        borderTopColor: 'rgba(0,0,0,0.03)',
         borderBottomColor: 'rgba(0,0,0,0.03)',
         borderBottomWidth: 1
     },
