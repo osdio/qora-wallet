@@ -8,60 +8,77 @@ import React,{
     Image,
     Dimensions
 } from 'react-native';
-import { connect } from 'react-redux';
-import RNRF, {Route, Schema, Animations, TabBar} from 'react-native-router-flux';
-import TabIcon from '../components/base/TabIcon';
-import { customFloatFromBottom } from '../configs/sceneConfig';
+import * as  Home from './Home'
+import * as UtilsComponent from './Utils';
+import Router from '../configs/Router';
 import connectComponent from '../utils/connectComponent';
-import Layouts from './index';
+import config from '../configs';
 
+const Utils = connectComponent(UtilsComponent);
 
 const { height, width } = Dimensions.get('window');
-const Router = connect()(RNRF.Router);
-
-
-let components = {};
-Object.keys(Layouts).forEach((key)=> {
-    components[key] = connectComponent(Layouts[key]);
-});
+const initialRoute = {
+    name: 'account',
+    index: 0,
+    component: connectComponent(Home),
+    id: 0
+};
 
 
 class Navigation extends Component {
+    constructor(props) {
+        super(props);
+        this.ids = [];
+        this.state = {
+            page: initialRoute.name
+        }
+    }
+
+
+    componentDidMount() {
+        this.navigator.navigationContext.addListener('didfocus', e => {
+            const { index, id } = e.data.route;
+            const haveFocused = this.ids.indexOf(id) > -1;
+            this[index] && this[index] && this[index].getWrappedInstance().componentDidFocus && this[index].getWrappedInstance().componentDidFocus(haveFocused);
+            !haveFocused && this.ids.push(id);
+        });
+    }
+
+
+    renderScene({ component, name, props, id, index }, navigator) {
+        this.router = this.router || new Router(navigator);
+        if (component) {
+            return React.createElement(component, {
+                ...props,
+                ref: view => this[index] = view,
+                router: this.router,
+                route: {
+                    name,
+                    id,
+                    index
+                }
+            });
+        }
+    }
+
+
+    configureScene(route) {
+        if (route.sceneConfig) {
+            return route.sceneConfig
+        }
+        return Navigator.SceneConfigs.FloatFromRight
+    }
+
+
     render() {
         return (
-            <View style={styles.container}>
-                <Router hideNavBar={true}>
-                    <Schema name="tab" type="switch" icon={TabIcon}/>
-                    <Schema name="modal" sceneConfig={customFloatFromBottom}/>
-
-
-                    <Route name="home" initial={true}>
-                        <Router footer={TabBar}
-                                showNavigationBar={false}
-                                titleStyle={styles.titleStyle}
-                                navigationBarStyle={styles.navigationBarStyle}
-                                tabBarStyle={styles.tabBarStyle}>
-                            <Route name="account" schema="tab" title="Account" component={components.Account}/>
-                            <Route name="block" schema="tab" title="Block" component={components.Block}/>
-                            <Route name="setting" schema="tab" title="Setting" component={components.Setting}/>
-                        </Router>
-                    </Route>
-
-
-                    <Route name="createWallet" type="push" schema="modal" initial={false}>
-                        <Router titleStyle={styles.titleStyle}
-                                navigationBarStyle={styles.navigationBarStyle}>
-                            <Route name="createModal1" initial={true} component={components.CreateWallet}
-                                   schema="modal"
-                                   title="Create Wallet"/>
-                            <Route name="createModal2" component={components.EncryptWallet}
-                                   title="Encrypt Wallet"/>
-                        </Router>
-                    </Route>
-
-
-                </Router>
-                <components.Utils/>
+            <View style={styles.bg}>
+                <Navigator
+                    ref={view => this.navigator=view}
+                    initialRoute={initialRoute}
+                    configureScene={this.configureScene.bind(this)}
+                    renderScene={this.renderScene.bind(this)}/>
+                <Utils/>
             </View>
         )
     }
@@ -70,24 +87,23 @@ class Navigation extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1
+    },
+    flexCenter: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    bg: {
         flex: 1,
         height,
-        width
-    },
-    navigationBarStyle: {
-        backgroundColor: '#4845aa',
-        borderBottomWidth: 0
-    },
-    tabBarStyle: {
-        backgroundColor: 'rgba(0,0,0,0.03)',
-        borderTopColor: 'rgba(0,0,0,0.1)',
-        borderTopWidth: 1
-    },
-    titleStyle: {
-        color: 'white'
+        width,
+        backgroundColor: 'transparent'
     }
-
 });
 
 
-export default Navigation;
+export const LayoutComponent = Navigation;
+export function mapStateToProps(state) {
+    return {}
+}

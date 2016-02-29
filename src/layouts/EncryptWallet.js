@@ -26,7 +26,7 @@ class EncryptWallet extends Component {
 
     _onPress() {
         let { text, text2 } = this.state;
-        const { actions } = this.props;
+        const { actions, wallet } = this.props;
         text = text.trim();
         text2 = text2.trim();
         if (text.length < 12) {
@@ -38,10 +38,13 @@ class EncryptWallet extends Component {
         }
         actions.encryptWallet({
             pwd: text,
-            wallet: this.props.wallet,
+            wallet: {
+                seed: wallet.seed,
+                account: wallet.account
+            },
             resolved: ()=> {
                 actions.toast('加密成功');
-                Actions.pop(2);
+                Actions.home();
             }
         });
     }

@@ -4,6 +4,7 @@ import * as Block from './Block';
 import * as Account from './Account';
 import * as CreateWallet from './CreateWallet';
 import * as EncryptWallet from './EncryptWallet';
+import * as Send from './Send';
 
 
 export default {
@@ -12,6 +13,7 @@ export default {
     Block,
     Account,
     CreateWallet,
-    EncryptWallet
+    EncryptWallet,
+    Send
 }
 

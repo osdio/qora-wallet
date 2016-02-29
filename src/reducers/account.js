@@ -21,7 +21,8 @@ export default function (state = initialState, action) {
         case types.CREATE_WALLET:
             return {
                 ...state,
-                address: payload.account.address
+                address: payload.account.address,
+                info: {}
             };
         case types.GET_ADDRESS_INFO_FROM_STORAGE:
             return {
