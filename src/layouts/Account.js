@@ -7,7 +7,6 @@ import React, {
     Dimensions,
     ScrollView,
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import Spinner from '../components/base/Spinner';
@@ -17,26 +16,26 @@ const { height, width } = Dimensions.get('window');
 
 
 class Account extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         console.log('constructor');
     }
 
 
-    //componentDidMount() {
-    //    const { actions, account } = this.props;
-    //    actions.getWalletFormStorage({
-    //        resolved: ()=> {
-    //            //Actions.createWallet();
-    //        },
-    //        rejected: ()=> {
-    //            Actions.createWallet();
-    //        }
-    //    });
-    //    actions.getAddressInfoFromStorage(({ address })=> {
-    //        actions.getAddressInfo(address);
-    //    });
-    //}
+    componentDidMount() {
+        const { actions, account } = this.props;
+        actions.getWalletFormStorage({
+            resolved: ()=> {
+
+            },
+            rejected: ()=> {
+
+            }
+        });
+        actions.getAddressInfoFromStorage(({ address })=> {
+            actions.getAddressInfo(address);
+        });
+    }
 
 
     _renderBlockInfo(lastBlock) {
@@ -77,22 +76,17 @@ class Account extends Component {
                 <View key="wall" style={styles.wall}>
                     <View style={styles.wallItem}>
                         <Icon name="ios-paperplane" size={45} style={styles.wallItemText}/>
-                        <Text
-                            onPress={()=>{
-                                Actions.send();
-                            }}
-                            style={styles.wallItemText}>
+                        <Text style={styles.wallItemText}>
                             打款
                         </Text>
                     </View>
 
                     <View style={styles.wallItem}>
                         <Icon name="ios-circle-filled" size={45} style={styles.wallItemText}/>
-                        <Text
-                            onPress={()=>{
-                                Actions.createWallet();
-                            }}
-                            style={styles.wallItemText}>
+                        <Text onPress={()=>{
+                            this.props.router.resetToCreateWallet();
+                        }}
+                              style={styles.wallItemText}>
                             余额
                         </Text>
                     </View>

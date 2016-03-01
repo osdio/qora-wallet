@@ -1,17 +1,11 @@
-import * as Utils from './Utils';
-import * as Setting from './Setting';
-import * as Block from './Block';
-import * as Account from './Account';
 import * as CreateWallet from './CreateWallet';
 import * as EncryptWallet from './EncryptWallet';
 import * as Send from './Send';
+import * as Home from './Home';
 
 
 export default {
-    Utils,
-    Setting,
-    Block,
-    Account,
+    Home,
     CreateWallet,
     EncryptWallet,
     Send

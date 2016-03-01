@@ -7,7 +7,6 @@ import React, {
     TextInput,
     Dimensions
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import Button from '../components/base/Button';
 
 
@@ -44,7 +43,7 @@ class EncryptWallet extends Component {
             },
             resolved: ()=> {
                 actions.toast('加密成功');
-                Actions.home();
+                this.props.router.resetToHome();
             }
         });
     }
