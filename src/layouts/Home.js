@@ -7,6 +7,7 @@ import React, {
     Dimensions
 } from 'react-native';
 import Tabs from 'react-native-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
 import * as Account from './Account';
 import * as Setting from './Setting';
 import * as Block from './Block';
@@ -17,6 +18,12 @@ const TABS = {
     account: connectComponent(Account),
     setting: connectComponent(Setting),
     block: connectComponent(Block)
+};
+
+const iconNameMap = {
+    'account': 'person',
+    'block': 'ios-pulse-strong',
+    'setting': 'ios-gear'
 };
 
 const INITIAL_PAGE = 'account';
@@ -35,7 +42,7 @@ class Home extends Component {
         super(props);
         this._tabs = {};
         this.state = {
-            select: INITIAL_PAGE
+            selected: INITIAL_PAGE
         };
         this.pages = [
             {
@@ -66,32 +73,40 @@ class Home extends Component {
 
 
     _onTabSelect(el) {
-        const { name } = el.props;
-        if (name === this.state.select) return;
+        const { tab } = el.props;
+        if (tab === this.state.selected) return;
         const enabledSceneNativeProps = {
             pointerEvents: 'auto',
             style: styles.baseScene
         };
 
-        const index = this._indexOf(name, this.pages);
+        const index = this._indexOf(tab, this.pages);
 
         if (index > -1) {
-            this._tabs[this.state.select].setNativeProps(SCENE_DISABLED_NATIVE_PROPS);
-            this._tabs[name].setNativeProps(enabledSceneNativeProps);
+            this._tabs[this.state.selected].setNativeProps(SCENE_DISABLED_NATIVE_PROPS);
+            this._tabs[tab].setNativeProps(enabledSceneNativeProps);
             this.setState({
-                select: name
+                selected: tab
             });
         }
         else {
-            this._tabs[this.state.select].setNativeProps(SCENE_DISABLED_NATIVE_PROPS);
+            this._tabs[this.state.selected].setNativeProps(SCENE_DISABLED_NATIVE_PROPS);
             this.pages.push({
-                id: name,
-                component: this._renderPage(TABS[name], name)
+                id: tab,
+                component: this._renderPage(TABS[tab], tab)
             });
             this.setState({
-                select: name
+                selected: tab
             });
         }
+    }
+
+
+    _renderTabIcon() {
+        return Object.keys(iconNameMap).map((key)=> {
+            return <Icon name={iconNameMap[key]} key={key} size={26} tab={key}
+                         style={ this.state.selected===key ? styles.selected : styles.icon }/>
+        });
     }
 
 
@@ -99,11 +114,11 @@ class Home extends Component {
         return (
             <View style={ styles.container }>
                 { this.pages.map(page => page.component) }
-                <Tabs selected={this.state.select} style={{backgroundColor:'white'}}
+                <Tabs selected={this.state.selected} style={ styles.tabs }
                       selectedStyle={{color:'red'}} onSelect={this._onTabSelect.bind(this)}>
-                    <Text name="account">Account</Text>
-                    <Text name="block">Block</Text>
-                    <Text name="setting">Setting</Text>
+
+                    { this._renderTabIcon() }
+
                 </Tabs>
             </View>
         )
@@ -124,6 +139,16 @@ const styles = StyleSheet.create({
         top: 0,
         opacity: 1
     },
+    tabs: {
+        borderTopColor: 'rgba(0,0,0,0.1)',
+        borderTopWidth: 1
+    },
+    selected: {
+        color: '#4845aa'
+    },
+    icon: {
+        color: 'rgba(0,0,0,0.8)'
+    }
 });
 
 
