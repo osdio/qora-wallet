@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const { height, width } = Dimensions.get('window');
 const statusBarHeight = Platform.OS === 'ios' ? 20 : 0;
 const navHeight = statusBarHeight + 45;
+const iconSize = 30;
 
 
 class Nav extends Component {
@@ -22,7 +23,7 @@ class Nav extends Component {
                 <TouchableOpacity onPress={()=>{
                     this.props.router.pop();
                 }}>
-                    <Icon name='ios-arrow-back' size={26} style={[styles.icon, styles[`${item}Icon`]]}/>
+                    <Icon name='ios-arrow-back' size={iconSize} style={[styles.icon, styles[`${item}Icon`]]}/>
                 </TouchableOpacity>
             )
         }
@@ -31,7 +32,7 @@ class Nav extends Component {
         if (this.props[`${item}Icon`]) {
             return (
                 <TouchableOpacity onPress={ this.props[`${item}Press`] }>
-                    <Icon name={this.props[`${item}Icon`]} size={26}
+                    <Icon name={this.props[`${item}Icon`]} size={iconSize}
                           style={[styles.icon, styles[`${item}Icon`]]}/>
                 </TouchableOpacity>
             )

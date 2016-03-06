@@ -10,7 +10,8 @@ const { SceneConfigs } = Navigator;
 
 
 const mapComponentNameToTitle = {
-    EncryptWallet: 'Encrypt Wallet'
+    EncryptWallet: 'Encrypt Wallet',
+    Send: 'Send Qora'
 };
 
 
@@ -32,11 +33,14 @@ class Router {
     push(props = {}, route) {
         let routesList = this.navigator.getCurrentRoutes();
         let nextIndex = routesList[routesList.length - 1].index + 1;
-        route.props = props;
-        route.index = nextIndex;
-        route.sceneConfig = route.sceneConfig ? route.sceneConfig : CustomSceneConfigs.customFloatFromRight;
-        route.id = _.uniqueId();
-        route.component = connectComponent(route.component);
+        route = {
+            ...route,
+            props,
+            index: nextIndex,
+            sceneConfig: route.sceneConfig ? route.sceneConfig : CustomSceneConfigs.customFloatFromRight,
+            id: _.uniqueId(),
+            component: connectComponent(route.component)
+        };
         this.navigator.push(route);
     }
 

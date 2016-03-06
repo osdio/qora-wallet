@@ -24,10 +24,10 @@ export default function (state = initialState, action) {
                 ...state,
                 address: payload.account.address
             };
-        case types.GET_ADDRESS_INFO_FROM_STORAGE:
+        case types.GET_ACCOUNT_FROM_STORAGE:
             return {
                 ...state,
-                address: payload.address
+                ...payload
             };
         case types.GET_BANLANCE:
             let { balance={} } = payload;

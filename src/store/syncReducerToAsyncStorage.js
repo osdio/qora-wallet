@@ -15,6 +15,7 @@ export default ({ dispatch, getState }) => next => action => {
         let state = getState();
         switch (payload) {
             case 'account':
+                console.log(state.account);
                 storageService.setItem(payload, state.account);
                 break;
             default:

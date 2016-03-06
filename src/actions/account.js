@@ -5,7 +5,7 @@ import * as storage from '../services/storage';
 import * as accountService from '../services/account';
 
 
-export const getAddressInfoFromStorage = createAction(types.GET_ADDRESS_INFO_FROM_STORAGE, async ()=> {
+export const getAccountFromStorage = createAction(types.GET_ACCOUNT_FROM_STORAGE, async ()=> {
     return storage.getItem('account');
 }, (resolved, rejected)=> {
     return {

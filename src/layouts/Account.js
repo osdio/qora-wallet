@@ -6,6 +6,7 @@ import React, {
     Text,
     Dimensions,
     ScrollView,
+    TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
@@ -32,7 +33,7 @@ class Account extends Component {
 
             }
         });
-        actions.getAddressInfoFromStorage(({ address })=> {
+        actions.getAccountFromStorage(({ address })=> {
             actions.getBalance(address);
         });
     }
@@ -74,10 +75,14 @@ class Account extends Component {
 
                 <View key="wall" style={styles.wall}>
                     <View style={styles.wallItem}>
-                        <Icon name="ios-paperplane" size={45} style={styles.wallItemText}/>
-                        <Text style={styles.wallItemText}>
-                            打款
-                        </Text>
+                        <TouchableOpacity onPress={()=> this.props.router.toSend({back:true})}>
+                            <View>
+                                <Icon name="ios-paperplane" size={45} style={styles.wallItemText}/>
+                                <Text style={styles.wallItemText}>
+                                    打款
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={styles.wallItem}>

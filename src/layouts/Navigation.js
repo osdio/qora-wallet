@@ -48,11 +48,11 @@ class Navigation extends Component {
 
 
     renderScene(route, navigator) {
-        var { component, name, props, id, index, showNav=true }=route;
+        var { component, name, props, id, index }=route;
         this.router = this.router || new Router(navigator);
         if (component) {
             return (
-                <Scene {...route}>
+                <Scene {...route} {...props} router={this.router}>
                     {
                         React.createElement(component, {
                             ...props,
