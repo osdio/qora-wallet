@@ -33,13 +33,13 @@ class Account extends Component {
             }
         });
         actions.getAddressInfoFromStorage(({ address })=> {
-            actions.getAddressInfo(address);
+            actions.getBalance(address);
         });
     }
 
 
     _renderBlockInfo(lastBlock) {
-        if (lastBlock.height) {
+        if (lastBlock.height && !this.props.getAddressBalancePending) {
             return (
                 <View key="blockInfo" style={styles.blockInfo}>
                     <Text key="last-block" style={styles.blockInfoText}>
@@ -65,8 +65,7 @@ class Account extends Component {
 
 
     render() {
-        const { info={} } = this.props.account;
-        const { lastBlock={} } = info;
+        const { lastBlock={}, balance={} } = this.props.account;
 
         return (
             <ScrollView style={styles.container}>
@@ -100,7 +99,7 @@ class Account extends Component {
                 </View>
                 <View key="sub-wall" style={styles.subWall}>
                     <Text style={styles.balance}>
-                        {info.balanceCheck}
+                        { balance}
                     </Text>
                 </View>
 
@@ -220,7 +219,8 @@ export function mapStateToProps(state) {
     return {
         wallet: state.wallet,
         walletUI: state.walletUI,
-        account: state.account
+        account: state.account,
+        accountUI: state.accountUI
     };
 }
 

@@ -4,26 +4,15 @@ import * as req from './request';
 
 export function getBalanceByAddress(address) {
     return req.get('/index/blockexplorer.json', {
-            addr: address
+            balance: address
         })
         .then(data=> {
-            if (data.error) {
-                throw data.error;
+            if (!data.lastBlock) {
+                throw 'getBalanceByAddress Error';
             }
-            let result = {
-                transactions: []
-            };
-            Object.keys(data).forEach(key=> {
-                if (/^\d+$/.test(key)) {
-                    result.transactions.push({
-                        blockHeight: key,
-                        ...data[key]
-                    });
-                }
-                else {
-                    result[key] = data[key];
-                }
-            });
-            return result;
+            return {
+                lastBlock: data.lastBlock,
+                balance: data[address]
+            }
         })
 }

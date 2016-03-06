@@ -2,7 +2,7 @@ import * as types from '../constants/ActionTypes';
 
 
 const initialState = {
-    getAddressInfoPending: false
+    getAddressBalancePending: false
 };
 
 
@@ -13,10 +13,10 @@ export default function (state = initialState, action) {
 
 
     switch (action.type) {
-        case types.GET_ADDRESS_INFO:
+        case types.GET_BANLANCE:
             return {
                 ...state,
-                getAddressInfoPending: status === 'start'
+                getAddressBalancePending: status === 'start'
             };
         default:
             return state;

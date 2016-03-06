@@ -3,7 +3,8 @@ import * as types from '../constants/ActionTypes';
 
 const initialState = {
     address: null,
-    info: {}
+    balance: 0,
+    lastBlock: {}
 };
 
 
@@ -21,18 +22,20 @@ export default function (state = initialState, action) {
         case types.CREATE_WALLET:
             return {
                 ...state,
-                address: payload.account.address,
-                info: {}
+                address: payload.account.address
             };
         case types.GET_ADDRESS_INFO_FROM_STORAGE:
             return {
                 ...state,
                 address: payload.address
             };
-        case types.GET_ADDRESS_INFO:
+        case types.GET_BANLANCE:
+            let { balance={} } = payload;
+            let amount = balance[0] && balance[0].amount || 0;
             return {
                 ...state,
-                info: payload
+                balance: amount,
+                lastBlock: payload.lastBlock
             };
         default:
             return state;

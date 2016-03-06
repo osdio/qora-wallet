@@ -15,7 +15,11 @@ export const getAddressInfoFromStorage = createAction(types.GET_ADDRESS_INFO_FRO
 });
 
 
-export const getAddressInfo = createAction(types.GET_ADDRESS_INFO, accountService.getBalanceByAddress);
+export const getBalance = createAction(types.GET_BANLANCE, accountService.getBalanceByAddress, ()=> {
+    return {
+        sync: 'account'
+    }
+});
 
 
 
