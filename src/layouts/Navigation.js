@@ -10,6 +10,7 @@ import React,{
 } from 'react-native';
 import * as  Home from './Home'
 import * as UtilsComponent from './Utils';
+import Scene from '../components/base/Scene';
 import Router from '../configs/Router';
 import connectComponent from '../utils/connectComponent';
 import config from '../configs';
@@ -21,7 +22,8 @@ const initialRoute = {
     name: 'account',
     index: 0,
     component: connectComponent(Home),
-    id: 0
+    id: 0,
+    showNav: false
 };
 
 
@@ -45,19 +47,26 @@ class Navigation extends Component {
     }
 
 
-    renderScene({ component, name, props, id, index }, navigator) {
+    renderScene(route, navigator) {
+        var { component, name, props, id, index, showNav=true }=route;
         this.router = this.router || new Router(navigator);
         if (component) {
-            return React.createElement(component, {
-                ...props,
-                ref: view => this[index] = view,
-                router: this.router,
-                route: {
-                    name,
-                    id,
-                    index
-                }
-            });
+            return (
+                <Scene {...route}>
+                    {
+                        React.createElement(component, {
+                            ...props,
+                            ref: view => this[index] = view,
+                            router: this.router,
+                            route: {
+                                name,
+                                id,
+                                index
+                            }
+                        })
+                    }
+                </Scene>
+            );
         }
     }
 

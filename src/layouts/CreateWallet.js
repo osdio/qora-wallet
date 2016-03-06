@@ -9,7 +9,6 @@ import React, {
 } from 'react-native';
 import Button from '../components/base/Button';
 
-
 const { height, width } = Dimensions.get('window');
 
 

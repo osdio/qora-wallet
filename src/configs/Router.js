@@ -9,6 +9,11 @@ import Layouts from '../layouts';
 const { SceneConfigs } = Navigator;
 
 
+const mapComponentNameToTitle = {
+    EncryptWallet: 'Encrypt Wallet'
+};
+
+
 class Router {
     constructor(navigator) {
         this.navigator = navigator;
@@ -16,7 +21,8 @@ class Router {
             this[`to${key}`] = (props)=> {
                 this.push(props, {
                     name: key,
-                    component: Layouts[key]
+                    component: Layouts[key],
+                    center: mapComponentNameToTitle[key]
                 })
             };
         });
@@ -43,7 +49,8 @@ class Router {
     resetToCreateWallet() {
         this.navigator.resetTo({
             name: 'CreateWallet',
-            component: connectComponent(Layouts.CreateWallet)
+            component: connectComponent(Layouts.CreateWallet),
+            center: 'Create Wallet'
         })
     }
 
@@ -51,7 +58,8 @@ class Router {
     resetToHome() {
         this.navigator.resetTo({
             name: 'Home',
-            component: connectComponent(Layouts.Home)
+            component: connectComponent(Layouts.Home),
+            showNav: false
         })
     }
 }

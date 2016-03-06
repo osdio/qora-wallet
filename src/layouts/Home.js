@@ -8,6 +8,8 @@ import React, {
 } from 'react-native';
 import Tabs from 'react-native-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Nav from '../components/base/Nav';
+import Scene from '../components/base/Scene';
 import * as Account from './Account';
 import * as Setting from './Setting';
 import * as Block from './Block';
@@ -25,6 +27,14 @@ const iconNameMap = {
     'block': 'ios-pulse-strong',
     'setting': 'ios-gear'
 };
+
+
+const tabNameMapToTitle = {
+    account: 'Account',
+    block: 'Block',
+    setting: 'Setting'
+};
+
 
 const INITIAL_PAGE = 'account';
 const { height, width } = Dimensions.get('window');
@@ -113,6 +123,7 @@ class Home extends Component {
     render() {
         return (
             <View style={ styles.container }>
+                <Nav center={ tabNameMapToTitle[this.state.selected] }/>
                 { this.pages.map(page => page.component) }
                 <Tabs selected={this.state.selected} style={ styles.tabs }
                       selectedStyle={{color:'red'}} onSelect={this._onTabSelect.bind(this)}>
@@ -128,7 +139,7 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     baseScene: {
         position: 'absolute',
@@ -136,7 +147,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        top: 0,
+        top: Scene.navHeight,
         opacity: 1
     },
     tabs: {

@@ -147,7 +147,6 @@ class Account extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 64,
         flexDirection: 'column',
         marginBottom: 50
     },
