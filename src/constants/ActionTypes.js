@@ -15,3 +15,7 @@ export const DECRYPTE_WALLET = 'DECRYPTE_WALLET';
 export const GET_BANLANCE = 'GET_BANLANCE';
 export const GET_ACCOUNT_FROM_STORAGE = 'GET_ACCOUNT_FROM_STORAGE';
 
+
+// transaction
+export const SEND = 'SEND';
+

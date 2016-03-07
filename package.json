@@ -8,6 +8,7 @@
     "build-ios": "react-native unbundle --entry-file index.ios.js --platform ios --dev false"
   },
   "dependencies": {
+    "bs58": "^3.0.0",
     "moment": "^2.11.2",
     "qora-core": "^0.1.3",
     "query-string": "^3.0.0",

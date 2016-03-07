@@ -11,6 +11,7 @@ function filterJSON(res) {
 
 
 function filterStatus(res) {
+    if (__DEV__) console.log(res);
     if (res.status >= 200 && res.status < 300) {
         return res
     }
@@ -23,7 +24,7 @@ function filterStatus(res) {
 }
 
 
-export function get(url, params) {
+export function get(url, params, options) {
     url = urlPrefix + url;
     if (params) {
         url += `?${qs.stringify(params)}`;
@@ -35,17 +36,37 @@ export function get(url, params) {
 }
 
 
-export function post(url, body) {
-    return fetch(urlPrefix + url, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
+export function post(url, body, options = {}) {
+    const { metaType='json' } = options;
+    let headers = {
+        'Accept': 'application/json'
+    };
+
+    let form = JSON.stringify(body);
+
+    if (metaType == 'json') {
+        headers = {
+            ...headers,
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
+        }
+    }
+
+    if (metaType == 'form') {
+        form = qs.stringify(body);
+        headers = {
+            ...headers,
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+    }
+
+    let uri = urlPrefix + url;
+    console.log(uri);
+    console.log(form);
+    return fetch(uri, {
+        method: 'POST',
+        headers,
+        body: form
     })
         .then(filterStatus)
         .then(filterJSON);
 }
-
-

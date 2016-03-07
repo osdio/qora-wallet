@@ -8,14 +8,30 @@ import React, {
 import Button from '../components/base/Button';
 
 
-class Send$ extends Component {
+class Send extends Component {
     constructor(props) {
         super(props);
         this.state = {
             recipient: '',
             amount: '',
-            fee: '10'
+            fee: '10',
+            pwd: ''
         };
+    }
+
+
+    _onPress() {
+        const { wallet={}, actions, account={} } = this.props;
+        const { pwd, amount, fee, recipient }=this.state;
+        const { address } = account;
+        actions.send({
+            encryptWallet: wallet.encryptWallet,
+            pwd,
+            address,
+            amount,
+            fee,
+            recipient
+        });
     }
 
 
@@ -45,6 +61,19 @@ class Send$ extends Component {
                         keyboardType="numeric"
                     />
 
+
+                    <TextInput
+                        style={ styles.input }
+                        onChangeText={(text) => this.setState({
+                        pwd:text
+                    })}
+                        value={this.state.pwd}
+                        placeholder="请输入密码"
+                        secureTextEntry={true}
+                        selectionColor="#4845aa"
+                    />
+
+
                     <TextInput
                         style={[styles.input, {color: 'rgba(0,0,0,0.5)'}]}
                         onChangeText={(text) => this.setState({
@@ -58,7 +87,7 @@ class Send$ extends Component {
                     />
 
                     <View style={styles.buttonWrapper}>
-                        <Button style={styles.button}>
+                        <Button style={styles.button} onPress={this._onPress.bind(this)}>
                             Send
                         </Button>
                     </View>
@@ -103,9 +132,12 @@ const styles = StyleSheet.create({
 });
 
 
-export const LayoutComponent = Send$;
+export const LayoutComponent = Send;
 export function mapStateToProps(state) {
-    return state;
+    return {
+        account: state.account,
+        wallet: state.wallet
+    };
 }
 
 
