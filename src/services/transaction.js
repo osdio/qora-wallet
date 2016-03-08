@@ -24,8 +24,10 @@ export async function processTx(txRaw) {
             json: txRaw
         }, options)
         .then(data=> {
-            console.log(data);
-            return data;
+            if (data.type === 'success') {
+                return JSON.parse(data.result);
+            }
+            throw data;
         });
 }
 
@@ -40,5 +42,16 @@ export async function send({encryptWallet, pwd, address, amount, fee, recipient}
         amount,
         fee
     });
-    const result = await processTx(txRaw);
+    return await processTx(txRaw);
+    //var returnExample = {
+    //    "reference": "ZggAH1d1ZuzXi59hZj2TDezpruGUnYn4N6bzRh4pehwFPaqxBhsUKhzhvYauw6FPrmg2L8R64ALPJu8x7Mu9FzY",
+    //    "amount": "1.00000000",
+    //    "signature": "Qcqfnjz8xPksCB5YBYSEfP8iQZ5WB6E2MYDQh5pF3QXPURT6SXSHrmmpg5ygcRyYte6qvBHWCwdSzVrp4uivMRn",
+    //    "sender": "QPkAnJJG5TfnwQW8vaHgJUmreodXb4ssLr",
+    //    "fee": "10.00000000",
+    //    "recipient": "QePQC5SHPMyorXLMHdiRA5WzsSqgiUcWKZ",
+    //    "type": 2,
+    //    "confirmations": 0,
+    //    "timestamp": 1457445616575
+    //};
 }

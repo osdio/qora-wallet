@@ -3,6 +3,11 @@ import { createAction } from 'redux-actions';
 import * as transactionService from '../services/transaction';
 
 
-export const send = createAction(types.SEND, transactionService.send);
+export const send = createAction(types.SEND, transactionService.send, ({resolved, rejected})=> {
+    return {
+        resolved,
+        rejected
+    }
+});
 
 

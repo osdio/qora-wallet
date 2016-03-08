@@ -3,9 +3,14 @@ import React, {
     Component,
     Proptypes,
     StyleSheet,
-    TextInput
+    TextInput,
+    Dimensions
 } from 'react-native';
 import Button from '../components/base/Button';
+import Loading from '../components/base/Loading';
+
+
+const { height, width } = Dimensions.get('window');
 
 
 class Send extends Component {
@@ -22,7 +27,7 @@ class Send extends Component {
 
     _onPress() {
         const { wallet={}, actions, account={} } = this.props;
-        const { pwd, amount, fee, recipient }=this.state;
+        const { pwd, amount, fee, recipient } = this.state;
         const { address } = account;
         actions.send({
             encryptWallet: wallet.encryptWallet,
@@ -30,7 +35,14 @@ class Send extends Component {
             address,
             amount,
             fee,
-            recipient
+            recipient,
+            resolved: ()=> {
+                actions.toast('发送成功');
+                this.props.router.pop();
+            },
+            rejected: ()=> {
+                actions.toast('发送失败');
+            }
         });
     }
 
@@ -92,6 +104,7 @@ class Send extends Component {
                         </Button>
                     </View>
                 </View>
+                { this.props.transitionUI.sendPending && <Loading style={styles.loading}/>}
             </View>
         )
     }
@@ -128,6 +141,9 @@ const styles = StyleSheet.create({
     },
     button: {
         color: 'white'
+    },
+    loading: {
+        top: (height - 80 - 64) / 2
     }
 });
 
@@ -136,7 +152,8 @@ export const LayoutComponent = Send;
 export function mapStateToProps(state) {
     return {
         account: state.account,
-        wallet: state.wallet
+        wallet: state.wallet,
+        transitionUI: state.transitionUI
     };
 }
 

@@ -16,8 +16,8 @@ export default function utilsMiddleware({ dispatch }) {
 				toast(dispatchToast);
 			}
 
-			if (typeof toast === 'string' || typeof toast === 'number') {
-				dispatchToast(toast.text);
+			if (typeof toast === 'string') {
+				dispatchToast(toast);
 			}
 		}
 		next(action);
