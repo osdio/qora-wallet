@@ -6,7 +6,13 @@ import * as accountService from '../services/account';
 
 
 export const getAccountFromStorage = createAction(types.GET_ACCOUNT_FROM_STORAGE, async ()=> {
-    return storage.getItem('account');
+    return storage.getItem('account')
+        .then((account)=> {
+            if (!account || !account.address) {
+                throw 'Address is empty'
+            }
+            return account;
+        });
 }, (resolved, rejected)=> {
     return {
         resolved,

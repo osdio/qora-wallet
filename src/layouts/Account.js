@@ -19,7 +19,6 @@ const { height, width } = Dimensions.get('window');
 class Account extends Component {
     constructor(props) {
         super(props);
-        console.log('constructor');
     }
 
 
@@ -27,14 +26,13 @@ class Account extends Component {
         const { actions, account } = this.props;
         actions.getWalletFormStorage({
             resolved: ()=> {
-
+                actions.getAccountFromStorage(({ address })=> {
+                    actions.getBalance(address);
+                });
             },
             rejected: ()=> {
-
+                this.props.router.toCreateWallet();
             }
-        });
-        actions.getAccountFromStorage(({ address })=> {
-            actions.getBalance(address);
         });
     }
 

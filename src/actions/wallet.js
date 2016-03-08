@@ -36,7 +36,13 @@ export const encryptWallet = createAction(types.ENCRYPT_WALLET, async ({pwd, wal
 
 
 export const getWalletFormStorage = createAction(types.GET_WALLET_FROM_STORAGE, ()=> {
-    return storage.getItem('wallet');
+    return storage.getItem('wallet')
+        .then(data=> {
+            if (!data) {
+                throw 'wallet is empty'
+            }
+            return data;
+        });
 }, ({resolved, rejected})=> {
     return {
         resolved,
