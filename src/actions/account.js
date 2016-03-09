@@ -28,6 +28,9 @@ export const getBalance = createAction(types.GET_BANLANCE, accountService.getBal
 });
 
 
+export const update = createAction(types.UPDATE);
+
+export const startUpdate = createAction(types.START_UPDATE);
 
 
 

@@ -55,3 +55,25 @@ export async function send({encryptWallet, pwd, address, amount, fee, recipient}
     //    "timestamp": 1457445616575
     //};
 }
+
+
+export async function getTxInfo(tx) {
+    return req.get('/index/blockexplorer.json', {
+            tx
+        })
+        .then(data=> {
+            if (!data) throw 'sync tx status error';
+            let transactionOb = data[1] || {};
+            let transaction = transactionOb.transaction;
+            if (!transaction) throw 'sync tx status error, transaction is empty';
+            transaction = {
+                ...transaction,
+                typeStr: transactionOb.type
+            };
+            return {
+                transaction,
+                lastBlock: data.lastBlock,
+                tx
+            }
+        })
+}

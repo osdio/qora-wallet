@@ -6,7 +6,8 @@ import React, {
     Text,
     Dimensions,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    RefreshControl
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
@@ -34,11 +35,12 @@ class Account extends Component {
                 this.props.router.toCreateWallet();
             }
         });
+        actions.getTransactionFromStorage();
     }
 
 
     _renderBlockInfo(lastBlock) {
-        if (lastBlock.height && !this.props.getAddressBalancePending) {
+        if (lastBlock.height) {
             return (
                 <View key="blockInfo" style={styles.blockInfo}>
                     <Text key="last-block" style={styles.blockInfoText}>
@@ -63,11 +65,27 @@ class Account extends Component {
     }
 
 
+    _onRefresh() {
+        this.props.actions.update();
+    }
+
+
     render() {
         const { lastBlock={}, balance={} } = this.props.account;
 
         return (
-            <ScrollView style={styles.container}>
+            <ScrollView style={styles.container}
+                        refreshControl={
+                              <RefreshControl
+                                refreshing={this.props.accountUI.getAddressBalancePending}
+                                onRefresh={this._onRefresh.bind(this)}
+                                tintColor="#4845aa"
+                                title="Loading..."
+                                colors={['#4845aa']}
+                                progressBackgroundColor="#ffff00"
+                              />
+                            }
+            >
 
                 { this._renderBlockInfo(lastBlock) }
 

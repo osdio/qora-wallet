@@ -5,8 +5,8 @@ import walletUI from './walletUI';
 import account from './account';
 import accountUI from './accountUI';
 import global from './global';
-import transition from './transition';
-import transitionUI from './transitionUI';
+import transaction from './transaction';
+import transactionUI from './transactionUI';
 
 export default combineReducers({
     utils,
@@ -15,6 +15,6 @@ export default combineReducers({
     account,
     accountUI,
     global,
-    transition,
-    transitionUI
+    transaction,
+    transactionUI
 });

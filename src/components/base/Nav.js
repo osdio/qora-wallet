@@ -18,6 +18,11 @@ const iconSize = 30;
 
 class Nav extends Component {
     _renderItem(item) {
+        if (this.props.renderRightItem && item === 'right') {
+            return this.props.renderRightItem();
+        }
+
+
         if (this.props.back && item === 'left') {
             return (
                 <TouchableOpacity onPress={()=>{
@@ -37,6 +42,8 @@ class Nav extends Component {
                 </TouchableOpacity>
             )
         }
+
+
         if (this.props[item]) {
             return (
                 <TouchableOpacity onPress={ this.props[`${item}Press`] }>

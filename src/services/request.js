@@ -29,6 +29,7 @@ export function get(url, params, options) {
     if (params) {
         url += `?${qs.stringify(params)}`;
     }
+    console.log(url);
 
     return fetch(url)
         .then(filterStatus)

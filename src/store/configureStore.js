@@ -4,6 +4,7 @@ import promiseMiddleware from './promiseMiddleware';
 import asyncActionCallbackMiddleware from './asyncActionCallbackMiddleware';
 import utilsMiddleware from './utilsMiddleware';
 import syncReducerToAsyncStorage from './syncReducerToAsyncStorage';
+import updateMiddleware from './update';
 import logger from 'redux-logger';
 import reducers from '../reducers';
 
@@ -13,6 +14,7 @@ var middlewares = [
     promiseMiddleware,
     asyncActionCallbackMiddleware,
     utilsMiddleware,
+    updateMiddleware,
     syncReducerToAsyncStorage
 ];
 

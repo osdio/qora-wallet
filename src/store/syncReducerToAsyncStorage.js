@@ -14,12 +14,8 @@ export default ({ dispatch, getState }) => next => action => {
     if (meta.syncStatus) {
         let state = getState();
         switch (payload) {
-            case 'account':
-                console.log(state.account);
-                storageService.setItem(payload, state.account);
-                break;
             default:
-                return;
+                storageService.setItem(payload, state[payload]);
         }
     }
 

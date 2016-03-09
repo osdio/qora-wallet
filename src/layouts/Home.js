@@ -10,6 +10,7 @@ import Tabs from 'react-native-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Nav from '../components/base/Nav';
 import Scene from '../components/base/Scene';
+import Spinner from '../components/base/Spinner';
 import * as Account from './Account';
 import * as Setting from './Setting';
 import * as Block from './Block';
@@ -46,6 +47,9 @@ const SCENE_DISABLED_NATIVE_PROPS = {
         opacity: 0
     }
 };
+
+const flagSize = 15;
+
 
 class Home extends Component {
     constructor(props) {
@@ -114,16 +118,47 @@ class Home extends Component {
 
     _renderTabIcon() {
         return Object.keys(iconNameMap).map((key)=> {
-            return <Icon name={iconNameMap[key]} key={key} size={26} tab={key}
-                         style={ this.state.selected===key ? styles.selected : styles.icon }/>
+            const { unconfirmedTransaction=[] } = this.props.transaction;
+            const length = unconfirmedTransaction.length;
+            return (
+                <View key={key} tab={key}>
+                    <Icon name={iconNameMap[key]} key={key} size={26} tab={key}
+                          style={ this.state.selected===key ? styles.selected : styles.icon }/>
+                    { key === 'block' && length > 0 && this._renderFlag(length) }
+                </View>
+            )
         });
+    }
+
+
+    _renderFlag(text) {
+        return (
+            <View style={ styles.flag }>
+                <Text style={ styles.flagText }>
+                    { text }
+                </Text>
+            </View>
+        )
+    }
+
+
+    _renderNavLoading() {
+        if (this.props.accountUI.getAddressBalancePending) {
+            return (
+                <View style={{ flex:1, flexDirection:'row', justifyContent:'flex-end' }}>
+                    <Spinner color="white"/>
+                </View>
+            )
+        }
+        return null;
     }
 
 
     render() {
         return (
             <View style={ styles.container }>
-                <Nav center={ tabNameMapToTitle[this.state.selected] }/>
+                <Nav renderRightItem={ this._renderNavLoading.bind(this) }
+                     center={ tabNameMapToTitle[this.state.selected] }/>
                 { this.pages.map(page => page.component) }
                 <Tabs selected={this.state.selected} style={ styles.tabs }
                       selectedStyle={{color:'red'}} onSelect={this._onTabSelect.bind(this)}>
@@ -159,13 +194,33 @@ const styles = StyleSheet.create({
     },
     icon: {
         color: 'rgba(0,0,0,0.8)'
+    },
+    flag: {
+        position: 'absolute',
+        top: -10,
+        right: -14,
+        height: flagSize,
+        width: flagSize,
+        borderRadius: flagSize,
+        backgroundColor: 'red',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    flagText: {
+        color: 'white',
+        backgroundColor: 'transparent',
+        fontSize: 9
     }
 });
 
 
 export const LayoutComponent = Home;
 export function mapStateToProps(state) {
-    return {};
+    return {
+        transaction: state.transaction,
+        accountUI: state.accountUI
+    };
 }
 
 

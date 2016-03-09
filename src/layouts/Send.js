@@ -12,6 +12,25 @@ import Loading from '../components/base/Loading';
 
 const { height, width } = Dimensions.get('window');
 
+const mapResultToStatus = {
+    1: 'VALIDATE_OK',
+    2: 'INVALID_ADDRESS',
+    3: 'NEGATIVE_AMOUNT',
+    4: 'NEGATIVE_FEE',
+    5: 'NO_BALANCE',
+    6: 'INVALID_REFERENCE',
+    7: 'INVALID_NAME_LENGTH',
+    8: 'INVALID_VALUE_LENGTH',
+    9: 'NAME_ALREADY_REGISTRED',
+    15: 'INVALID_AMOUNT',
+    17: 'NAME_NOT_LOWER_CASE',
+    27: 'INVALID_DATA_LENGTH',
+    34: 'INVALID_PAYMENTS_LENGTH',
+    40: 'FEE_LESS_REQUIRED',
+    41: 'INVALID_RAW_DATA',
+    1000: 'NOT_YET_RELEASED'
+};
+
 
 class Send extends Component {
     constructor(props) {
@@ -36,9 +55,15 @@ class Send extends Component {
             amount,
             fee,
             recipient,
-            resolved: ()=> {
-                actions.toast('发送成功');
-                this.props.router.pop();
+            resolved: (result)=> {
+                console.log(result);
+                if (typeof result === 'object' && result.timestamp) {
+                    actions.toast('发送成功');
+                    this.props.router.pop();
+                }
+                else {
+                    actions.toast(`发送失败[${mapResultToStatus[result]}]`)
+                }
             },
             rejected: ()=> {
                 actions.toast('发送失败');
@@ -104,7 +129,7 @@ class Send extends Component {
                         </Button>
                     </View>
                 </View>
-                { this.props.transitionUI.sendPending && <Loading style={styles.loading}/>}
+                { this.props.transactionUI.sendPending && <Loading style={styles.loading}/>}
             </View>
         )
     }
@@ -153,7 +178,7 @@ export function mapStateToProps(state) {
     return {
         account: state.account,
         wallet: state.wallet,
-        transitionUI: state.transitionUI
+        transactionUI: state.transactionUI
     };
 }
 

@@ -37,6 +37,12 @@ export default function (state = initialState, action) {
                 balance: amount,
                 lastBlock: payload.lastBlock
             };
+        case types.SYNC_TX_INFO:
+            let { lastBlock={} } = payload;
+            return {
+                ...state,
+                lastBlock
+            };
         default:
             return state;
     }
