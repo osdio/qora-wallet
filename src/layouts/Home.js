@@ -146,7 +146,7 @@ class Home extends Component {
         if (this.props.accountUI.getAddressBalancePending) {
             return (
                 <View style={{ flex:1, flexDirection:'row', justifyContent:'flex-end' }}>
-                    <Spinner color="white"/>
+                    <Spinner styleAttr="Small"  color="white"/>
                 </View>
             )
         }

@@ -4,7 +4,6 @@ import wallet from './wallet';
 import walletUI from './walletUI';
 import account from './account';
 import accountUI from './accountUI';
-import global from './global';
 import transaction from './transaction';
 import transactionUI from './transactionUI';
 
@@ -14,7 +13,6 @@ export default combineReducers({
     walletUI,
     account,
     accountUI,
-    global,
     transaction,
     transactionUI
 });

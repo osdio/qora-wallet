@@ -110,19 +110,6 @@ class Send extends Component {
                         selectionColor="#4845aa"
                     />
 
-
-                    <TextInput
-                        style={[styles.input, {color: 'rgba(0,0,0,0.5)'}]}
-                        onChangeText={(text) => this.setState({
-                        fee:text
-                    })}
-                        value={this.state.fee}
-                        placeholder="请输入手续费"
-                        selectionColor="#4845aa"
-                        keyboardType="numeric"
-                        editable={false}
-                    />
-
                     <View style={styles.buttonWrapper}>
                         <Button style={styles.button} onPress={this._onPress.bind(this)}>
                             Send
