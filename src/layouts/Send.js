@@ -4,8 +4,10 @@ import React, {
     Proptypes,
     StyleSheet,
     TextInput,
-    Dimensions
+    Dimensions,
+    TouchableOpacity
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Button from '../components/base/Button';
 import Loading from '../components/base/Loading';
 
@@ -72,20 +74,39 @@ class Send extends Component {
     }
 
 
+    _onCameraPress() {
+        this.props.router.toQRCode({
+            back: true,
+            callback: ({data})=> {
+                this.setState({
+                    recipient: data
+                })
+            }
+        });
+    }
+
+
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.form}>
-                    <TextInput
-                        style={ styles.input }
-                        onChangeText={(text) => this.setState({
-                        recipient:text
-                    })}
-                        value={this.state.recipient}
-                        placeholder="请输入收款地址"
-                        selectionColor="#4845aa"
-                        autoFocus={ true }
-                    />
+                    <View>
+                        <TextInput
+                            style={[styles.input, styles.recipientInput ]}
+                            onChangeText={(text) => this.setState({
+                                recipient: text
+                            })}
+                            value={this.state.recipient}
+                            placeholder="请输入收款地址"
+                            selectionColor="#4845aa"
+                            autoFocus={ true }
+                        />
+                        <View style={styles.cameraBtn}>
+                            <TouchableOpacity onPress={this._onCameraPress.bind(this)}>
+                                <Icon name="camera" color="#4845aa" size={30}/>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
 
                     <TextInput
                         style={ styles.input }
@@ -143,6 +164,9 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10
     },
+    recipientInput: {
+        paddingRight: 60
+    },
     buttonWrapper: {
         backgroundColor: '#4845aa',
         flexDirection: 'row',
@@ -156,6 +180,11 @@ const styles = StyleSheet.create({
     },
     loading: {
         top: (height - 80 - 64) / 2
+    },
+    cameraBtn: {
+        position: 'absolute',
+        right: 15,
+        top: (40 - 30) / 2
     }
 });
 

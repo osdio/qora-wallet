@@ -9,7 +9,7 @@ const { width, height } = Dimensions.get('window');
 
 const baseConfig = Navigator.SceneConfigs.FloatFromRight;
 const popGestureConfig = Object.assign({}, baseConfig.gestures.pop, {
-    edgeHitWidth: 0
+    edgeHitWidth: width / 3
 });
 
 

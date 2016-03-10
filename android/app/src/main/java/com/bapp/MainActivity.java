@@ -1,6 +1,7 @@
 package com.bapp;
 
 import com.facebook.react.ReactActivity;
+import com.eguma.vibration.Vibration;
 import com.lwansbrough.RCTCamera.*;
 import com.eguma.barcodescanner.BarcodeScanner;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -40,6 +41,7 @@ public class MainActivity extends ReactActivity {
         new MainReactPackage(),
         new RCTCameraPackage(),
         new BarcodeScanner(),
+        new Vibration(),
         new VectorIconsPackage()
       );
     }

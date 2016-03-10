@@ -11,7 +11,8 @@ const { SceneConfigs } = Navigator;
 
 const mapComponentNameToTitle = {
     EncryptWallet: 'Encrypt Wallet',
-    Send: 'Send Qora'
+    Send: 'Send Qora',
+    QRCode: 'Scan'
 };
 
 
