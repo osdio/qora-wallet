@@ -1,7 +1,7 @@
 package com.bapp;
 
 import com.facebook.react.ReactActivity;
-import com.lwansbrough.ReactCamera.ReactCamera;
+import com.lwansbrough.RCTCamera.*;
 import com.eguma.barcodescanner.BarcodeScanner;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactPackage;
@@ -38,7 +38,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-        new ReactCamera(),
+        new RCTCameraPackage(),
         new BarcodeScanner(),
         new VectorIconsPackage()
       );
