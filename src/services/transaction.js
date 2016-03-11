@@ -3,6 +3,14 @@ import * as req from './request';
 
 const options = {metaType: 'form'};
 
+
+function findUnconfirmedLastReference(arr) {
+    return arr.filter(item=> {
+        return item.confirmations === 0
+    });
+}
+
+
 export function getLastReference(address) {
     return req.post('/index/api.html', {
             type: 'get',
@@ -32,8 +40,15 @@ export async function processTx(txRaw) {
 }
 
 
-export async function send({encryptWallet, pwd, address, amount, fee, recipient}) {
-    const lastReference = await getLastReference(address);
+export async function send({encryptWallet, pwd, address, amount, fee, recipient, unconfirmedTransaction}) {
+    unconfirmedTransaction = findUnconfirmedLastReference(unconfirmedTransaction);
+    let lastReference;
+    if (!unconfirmedTransaction.length) {
+        lastReference = await getLastReference(address);
+    }
+    else {
+        lastReference = unconfirmedTransaction[0].signature;
+    }
     const wallet = JSON.parse(qora.core.decrypt(encryptWallet, pwd));
     const txRaw = qora.transaction.generatePaymentTransactionRaw({
         seed: wallet.seed,

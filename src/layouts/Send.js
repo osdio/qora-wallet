@@ -47,7 +47,8 @@ class Send extends Component {
 
 
     _onPress() {
-        const { wallet={}, actions, account={} } = this.props;
+        const { wallet={}, actions, account={}, transaction } = this.props;
+        const { unconfirmedTransaction } = transaction;
         const { pwd, amount, fee, recipient } = this.state;
         const { address } = account;
         actions.send({
@@ -57,6 +58,7 @@ class Send extends Component {
             amount,
             fee,
             recipient,
+            unconfirmedTransaction,
             resolved: (result)=> {
                 console.log(result);
                 if (typeof result === 'object' && result.timestamp) {
@@ -194,7 +196,8 @@ export function mapStateToProps(state) {
     return {
         account: state.account,
         wallet: state.wallet,
-        transactionUI: state.transactionUI
+        transactionUI: state.transactionUI,
+        transaction: state.transaction
     };
 }
 

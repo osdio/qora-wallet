@@ -52,7 +52,7 @@ export default function (state = initialState, action) {
             let { transaction={} } = payload;
             let index = indexOf(transaction, state.unconfirmedTransaction);
             if (index > -1) {
-                if (transaction.confirmations > 10) {
+                if (transaction.confirmations > 0) {
                     state.unconfirmedTransaction.splice(index, 1);
                 }
                 else {
