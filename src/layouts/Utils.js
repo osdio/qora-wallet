@@ -6,6 +6,7 @@ import React,{
     StatusBar
 } from 'react-native';
 import Toast from '../components/base/Toast';
+import Unlock from '../components/Unlock';
 
 
 class Utils extends Component {
@@ -17,14 +18,16 @@ class Utils extends Component {
 
 
     componentDidMount() {
-        const { actions } = this.props;
+        const { actions, unlock } = this.props;
     }
 
 
     render() {
+        const { actions, unlock } = this.props;
         return (
             <View style={styles.container}>
                 <StatusBar barStyle="light-content"/>
+                <Unlock {...unlock} actions={actions}/>
                 <Toast ref={ (view)=> this.toast=view }/>
             </View>
         );

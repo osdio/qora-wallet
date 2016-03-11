@@ -104,7 +104,7 @@ class Account extends Component {
                     <View style={styles.wallItem}>
                         <Icon name="ios-circle-filled" size={45} style={styles.wallItemText}/>
                         <Text onPress={()=>{
-                            this.props.router.resetToCreateWallet();
+                            this.props.actions.openUnlock();
                         }}
                               style={styles.wallItemText}>
                             余额

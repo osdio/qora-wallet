@@ -2,6 +2,8 @@
 export const TOAST = 'TOAST';
 export const OPEN_TOAST = 'OPEN_TOAST';
 export const CLOSE_TOAST = 'CLOSE_TOAST';
+export const OPEN_UNLOCK = 'OPEN_UNLOCK';
+export const CLOSE_UNLOCK = 'CLOSE_UNLOCK';
 
 
 // wallet

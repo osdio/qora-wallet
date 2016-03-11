@@ -4,7 +4,8 @@ import * as types from '../constants/ActionTypes';
 const initialState = {
     seed: null,
     account: null,
-    encryptWallet: null
+    encryptWallet: null,
+    wallet: null
 };
 
 
