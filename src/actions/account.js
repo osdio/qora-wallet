@@ -33,6 +33,11 @@ export const update = createAction(types.UPDATE);
 export const startUpdate = createAction(types.START_UPDATE);
 
 
+export const getAddressByName = createAction(types.GET_ADDRESS_BY_NAME, async ()=> {
+
+});
+
+
 
 
 

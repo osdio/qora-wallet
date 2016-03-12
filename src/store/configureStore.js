@@ -5,12 +5,14 @@ import asyncActionCallbackMiddleware from './asyncActionCallbackMiddleware';
 import utilsMiddleware from './utilsMiddleware';
 import syncReducerToAsyncStorage from './syncReducerToAsyncStorage';
 import updateMiddleware from './update';
+import unlockMiddleware from './unlock';
 import logger from 'redux-logger';
 import reducers from '../reducers';
 
 
 var middlewares = [
     thunkMiddleware,
+    unlockMiddleware,
     promiseMiddleware,
     asyncActionCallbackMiddleware,
     utilsMiddleware,

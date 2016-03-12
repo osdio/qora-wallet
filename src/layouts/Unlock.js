@@ -90,6 +90,7 @@ class Unlock extends Component {
                         placeholder="请输入密码"
                         secureTextEntry={true}
                         selectionColor="#4845aa"
+                        autoFocus={ true }
                     />
                     <View style={ styles.toolbar }>
                         <Button style={styles.button} onPress={this._onPress.bind(this)}>

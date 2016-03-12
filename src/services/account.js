@@ -16,3 +16,17 @@ export function getBalanceByAddress(address) {
             }
         })
 }
+
+
+export function getAddressByName(name) {
+    return req.post('/index/api.html', {
+            type: 'get',
+            apiurl: `/names/${name}`
+        }, {metaType: 'form'})
+        .then(data=> {
+            if (data.success) {
+                return data.result;
+            }
+            throw data;
+        });
+}

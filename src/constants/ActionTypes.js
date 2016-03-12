@@ -19,6 +19,7 @@ export const GET_BANLANCE = 'GET_BANLANCE';
 export const GET_ACCOUNT_FROM_STORAGE = 'GET_ACCOUNT_FROM_STORAGE';
 export const UPDATE = 'UPDATE';
 export const START_UPDATE = 'START_UPDATE';
+export const GET_ADDRESS_BY_NAME = 'GET_ADDRESS_BY_NAME';
 
 
 // transaction

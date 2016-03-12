@@ -46,10 +46,8 @@ class Send extends Component {
 
 
     _onPress() {
-        const { wallet={}, actions, account={}, transaction } = this.props;
-        const { unconfirmedTransaction } = transaction;
+        const { actions } = this.props;
         const { amount, fee, recipient } = this.state;
-        const { address } = account;
 
         if (!recipient) {
             return actions.toast('地址不能为空');
@@ -59,35 +57,23 @@ class Send extends Component {
             return actions.toast('数量不能为空');
         }
 
-        const sendTx = (pwd)=> {
-            actions.send({
-                wallet,
-                pwd,
-                address,
-                amount,
-                fee,
-                recipient,
-                unconfirmedTransaction,
-                resolved: (result)=> {
-                    if (typeof result === 'object' && result.timestamp) {
-                        actions.toast('发送成功');
-                        this.props.router.pop();
-                    }
-                    else {
-                        actions.toast(`发送失败[${mapResultToStatus[result]}]`)
-                    }
-                },
-                rejected: ()=> {
-                    actions.toast('发送失败');
+        actions.send({
+            fee,
+            amount,
+            recipient,
+            resolved: (result)=> {
+                if (typeof result === 'object' && result.timestamp) {
+                    actions.toast('发送成功');
+                    this.props.router.pop();
                 }
-            });
-        };
-        if (wallet.seed) {
-            sendTx();
-        }
-        else {
-            actions.openUnlock((pwd)=> sendTx(pwd));
-        }
+                else {
+                    actions.toast(`发送失败[${mapResultToStatus[result]}]`)
+                }
+            },
+            rejected: ()=> {
+                actions.toast('发送失败');
+            }
+        });
     }
 
 
@@ -199,10 +185,7 @@ const styles = StyleSheet.create({
 export const LayoutComponent = Send;
 export function mapStateToProps(state) {
     return {
-        account: state.account,
-        wallet: state.wallet,
-        transactionUI: state.transactionUI,
-        transaction: state.transaction
+        transactionUI: state.transactionUI
     };
 }
 

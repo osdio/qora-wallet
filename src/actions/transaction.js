@@ -4,11 +4,11 @@ import * as transactionService from '../services/transaction';
 import * as storageService from '../services/storage';
 
 
-export const send = createAction(types.SEND, transactionService.send, ({resolved, rejected})=> {
+export const send = createAction(types.SEND, (args)=> {
+    return args;
+}, ()=> {
     return {
-        resolved,
-        rejected,
-        sync: 'transaction'
+        unlock: 'transaction'
     }
 });
 
