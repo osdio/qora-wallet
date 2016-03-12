@@ -40,18 +40,23 @@ export async function processTx(txRaw) {
 }
 
 
-export async function send({encryptWallet, pwd, address, amount, fee, recipient, unconfirmedTransaction}) {
+export async function send({wallet={}, pwd, address, amount, fee, recipient, unconfirmedTransaction}) {
     unconfirmedTransaction = findUnconfirmedLastReference(unconfirmedTransaction);
-    let lastReference;
+    let lastReference, seed;
     if (!unconfirmedTransaction.length) {
         lastReference = await getLastReference(address);
     }
     else {
         lastReference = unconfirmedTransaction[0].signature;
     }
-    const wallet = JSON.parse(qora.core.decrypt(encryptWallet, pwd));
+    if (wallet.seed) {
+        seed = wallet.seed;
+    }
+    else {
+        seed = JSON.parse(qora.core.decrypt(wallet.encryptWallet, pwd)).seed;
+    }
     const txRaw = qora.transaction.generatePaymentTransactionRaw({
-        seed: wallet.seed,
+        seed,
         lastReference,
         recipient,
         amount,

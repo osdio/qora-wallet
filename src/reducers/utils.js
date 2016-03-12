@@ -4,7 +4,8 @@ import * as types from '../constants/ActionTypes';
 const defaultUnlock = {
     show: false,
     resolved: null,
-    rejected: null
+    rejected: null,
+    showSwitch: true
 };
 
 const initialState = {

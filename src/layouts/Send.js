@@ -40,8 +40,7 @@ class Send extends Component {
         this.state = {
             recipient: '',
             amount: '',
-            fee: '10',
-            pwd: ''
+            fee: '10'
         };
     }
 
@@ -49,30 +48,37 @@ class Send extends Component {
     _onPress() {
         const { wallet={}, actions, account={}, transaction } = this.props;
         const { unconfirmedTransaction } = transaction;
-        const { pwd, amount, fee, recipient } = this.state;
+        const { amount, fee, recipient } = this.state;
         const { address } = account;
-        actions.send({
-            encryptWallet: wallet.encryptWallet,
-            pwd,
-            address,
-            amount,
-            fee,
-            recipient,
-            unconfirmedTransaction,
-            resolved: (result)=> {
-                console.log(result);
-                if (typeof result === 'object' && result.timestamp) {
-                    actions.toast('发送成功');
-                    this.props.router.pop();
+        const sendTx = (pwd)=> {
+            actions.send({
+                wallet,
+                pwd,
+                address,
+                amount,
+                fee,
+                recipient,
+                unconfirmedTransaction,
+                resolved: (result)=> {
+                    if (typeof result === 'object' && result.timestamp) {
+                        actions.toast('发送成功');
+                        this.props.router.pop();
+                    }
+                    else {
+                        actions.toast(`发送失败[${mapResultToStatus[result]}]`)
+                    }
+                },
+                rejected: ()=> {
+                    actions.toast('发送失败');
                 }
-                else {
-                    actions.toast(`发送失败[${mapResultToStatus[result]}]`)
-                }
-            },
-            rejected: ()=> {
-                actions.toast('发送失败');
-            }
-        });
+            });
+        };
+        if (wallet.seed) {
+            sendTx();
+        }
+        else {
+            actions.openUnlock((pwd)=> sendTx(pwd));
+        }
     }
 
 
@@ -122,17 +128,6 @@ class Send extends Component {
                     />
 
 
-                    <TextInput
-                        style={ styles.input }
-                        onChangeText={(text) => this.setState({
-                        pwd:text
-                    })}
-                        value={this.state.pwd}
-                        placeholder="请输入密码"
-                        secureTextEntry={true}
-                        selectionColor="#4845aa"
-                    />
-
                     <View style={styles.buttonWrapper}>
                         <Button style={styles.button} onPress={this._onPress.bind(this)}>
                             Send
@@ -153,7 +148,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     form: {
-        height: 40 * 5 + 70,
+        height: 40 * 4 + 70,
         flexDirection: 'column',
         justifyContent: 'space-around',
         padding: 20

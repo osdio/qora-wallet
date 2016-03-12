@@ -52,5 +52,9 @@ export const getWalletFormStorage = createAction(types.GET_WALLET_FROM_STORAGE, 
 
 
 export const decryptWallet = createAction(types.DECRYPTE_WALLET, ({encryptWallet, pwd})=> {
-    return qora.core.decrypt(encryptWallet, pwd);
+    const wallet = JSON.parse(qora.core.decrypt(encryptWallet, pwd));
+    if (wallet && typeof wallet === 'object' && wallet.seed) {
+        return wallet;
+    }
+    throw 'decryptWallet Error';
 });

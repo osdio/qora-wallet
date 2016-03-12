@@ -6,7 +6,8 @@ import React, {
     Dimensions,
     Text,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    Switch
 } from 'react-native';
 import Button from 'react-native-button';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -14,6 +15,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const { height, width } = Dimensions.get('window');
 const modalWidth = width * 0.8;
 const modalHeight = 160;
+const switchONText = '点击关闭密码缓存';
+const switchOFFText = '点击打开密码缓存';
+
 
 class Unlock extends Component {
     constructor(props) {
@@ -24,8 +28,29 @@ class Unlock extends Component {
     }
 
 
-    _onPress() {
+    _resetPwd() {
+        this.setState({
+            pwd: '',
+            shouldUnlockWallet: false
+        });
+    }
 
+
+    _onPress() {
+        const { resolved, actions, wallet } = this.props;
+        const { pwd } = this.state;
+        if (!pwd) {
+            return actions.toast('密码不能为空');
+        }
+        if (this.state.shouldUnlockWallet) {
+            actions.decryptWallet({
+                pwd,
+                encryptWallet: wallet.encryptWallet
+            });
+        }
+        resolved && resolved(this.state.pwd);
+        actions.closeUnlock();
+        this._resetPwd();
     }
 
 
@@ -33,10 +58,23 @@ class Unlock extends Component {
         const { rejected, actions } = this.props;
         rejected && rejected();
         actions.closeUnlock();
+        this._resetPwd();
     }
 
 
     render() {
+        const unlockWallet = (
+            <View style={ styles.unlockWallet}>
+                <Switch
+                    onValueChange={(value) => this.setState({shouldUnlockWallet: value})}
+                    style={ styles.switchBtn }
+                    value={this.state.shouldUnlockWallet}/>
+                <Text style={ styles.unlockWalletText }>
+                    { this.state.shouldUnlockWallet ? switchONText : switchOFFText }
+                </Text>
+            </View>
+        );
+
         if (!this.props.show) {
             return null;
         }
@@ -53,12 +91,15 @@ class Unlock extends Component {
                         secureTextEntry={true}
                         selectionColor="#4845aa"
                     />
-                    <View style={ styles.toolbar}>
+                    <View style={ styles.toolbar }>
                         <Button style={styles.button} onPress={this._onPress.bind(this)}>
                             Unlock
                         </Button>
                     </View>
-                    <View style={ styles.iconWrapper}>
+
+                    { this.props.showSwitch && unlockWallet }
+
+                    <View style={ styles.iconWrapper }>
                         <TouchableOpacity onPress={this._close.bind(this)}>
                             <Icon size={26} style={ styles.closeIcon } name="close"/>
                         </TouchableOpacity>
@@ -121,10 +162,30 @@ const styles = StyleSheet.create({
     },
     closeIcon: {
         color: 'white'
+    },
+    unlockWallet: {
+        width: modalWidth - 20 * 2,
+        marginTop: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    switchBtn: {
+        flex: 2
+    },
+    unlockWalletText: {
+        flex: 5,
+        textAlign: 'right',
+        color: 'rgba(0,0,0,0.5)'
     }
 });
 
 
-export default Unlock;
-
+export const LayoutComponent = Unlock;
+export function mapStateToProps(state) {
+    return {
+        wallet: state.wallet,
+        ...state.utils.unlock
+    }
+}
 
