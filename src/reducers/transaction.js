@@ -22,6 +22,9 @@ function removeDeadTransaction(arr) {
         if (typeof arr[i] !== 'object') {
             temp.push(i);
         }
+        else if (!arr[i].signature) {
+            temp.push(i);
+        }
     }
     temp.forEach(i=> {
         arr.splice(i, 1);
@@ -35,12 +38,19 @@ export default function (state = initialState, action) {
 
 
     if (sequence.type === 'start' || error) {
+        if (action.type === types.SYNC_TX_INFO) {
+            removeDeadTransaction(state.unconfirmedTransaction);
+            return {
+                ...state,
+                unconfirmedTransaction: state.unconfirmedTransaction.concat([])
+            }
+        }
         return state;
     }
 
     switch (action.type) {
         case types.SEND:
-            if (typeof payload === 'object') {
+            if (typeof payload === 'object' && sequence.type === 'next' && payload.signature) {
                 return {
                     ...state,
                     unconfirmedTransaction: [payload].concat(state.unconfirmedTransaction)

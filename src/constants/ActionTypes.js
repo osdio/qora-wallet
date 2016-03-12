@@ -24,6 +24,7 @@ export const GET_ADDRESS_BY_NAME = 'GET_ADDRESS_BY_NAME';
 
 // transaction
 export const SEND = 'SEND';
+export const TRANSACTION = 'TRANSACTION';
 export const GET_TX_INFO = 'GET_TX_INFO';
 export const SYNC_TX_INFO = 'SYNC_TX_INFO';
 export const GET_TRANSACTION_FROM_STORAGE = 'GET_TRANSACTION_FROM_STORAGE';

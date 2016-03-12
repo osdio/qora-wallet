@@ -46,6 +46,7 @@ class Send extends Component {
 
 
     _onPress() {
+        if (this.sending) return;
         const { actions } = this.props;
         const { amount, fee, recipient } = this.state;
 
@@ -57,11 +58,14 @@ class Send extends Component {
             return actions.toast('数量不能为空');
         }
 
+        this.sending = true;
+
         actions.send({
             fee,
             amount,
             recipient,
             resolved: (result)=> {
+                this.sending = false;
                 if (typeof result === 'object' && result.timestamp) {
                     actions.toast('发送成功');
                     this.props.router.pop();
@@ -71,6 +75,7 @@ class Send extends Component {
                 }
             },
             rejected: ()=> {
+                this.sending = false;
                 actions.toast('发送失败');
             }
         });
