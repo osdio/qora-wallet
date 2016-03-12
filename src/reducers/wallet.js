@@ -31,10 +31,13 @@ export default function (state = initialState, action) {
                 encryptWallet: payload
             };
         case types.DECRYPTE_WALLET:
-            return {
-                ...state,
-                ...payload
-            };
+            if (payload) {
+                return {
+                    ...state,
+                    ...payload
+                };
+            }
+            return state;
         case types.LOCK:
             return {
                 ...state,

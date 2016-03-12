@@ -51,16 +51,17 @@ export const getWalletFormStorage = createAction(types.GET_WALLET_FROM_STORAGE, 
 });
 
 
-export const decryptWallet = createAction(types.DECRYPTE_WALLET, ({encryptWallet, pwd})=> {
-    const wallet = JSON.parse(qora.core.decrypt(encryptWallet, pwd));
-    if (wallet && typeof wallet === 'object' && wallet.seed) {
-        return wallet;
+export const decryptWallet = createAction(types.DECRYPTE_WALLET, ({encryptWallet, pwd, resolved, rejected })=> {
+    try {
+        const wallet = JSON.parse(qora.core.decrypt(encryptWallet, pwd));
+        if (wallet && typeof wallet === 'object' && wallet.seed) {
+            resolved && resolved();
+            return wallet;
+        }
     }
-    throw 'decryptWallet Error';
-}, ({ resolved, rejected})=> {
-    return {
-        resolved,
-        rejected
+    catch (e) {
+        rejected && rejected();
+        return null;
     }
 });
 

@@ -77,13 +77,14 @@ class Home extends Component {
                         encryptWallet: wallet.encryptWallet,
                         pwd,
                         resolved: ()=> actions.toast('解锁成功'),
-                        rejected: ()=> actions.toast('解锁失败')
+                        rejected: ()=> actions.toast('密码错误')
                     });
                 }
             });
         }
         else {
             actions.lock();
+            actions.toast('locked');
         }
     }
 

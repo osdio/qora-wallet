@@ -50,6 +50,15 @@ class Send extends Component {
         const { unconfirmedTransaction } = transaction;
         const { amount, fee, recipient } = this.state;
         const { address } = account;
+
+        if (!recipient) {
+            return actions.toast('地址不能为空');
+        }
+
+        if (!amount) {
+            return actions.toast('数量不能为空');
+        }
+
         const sendTx = (pwd)=> {
             actions.send({
                 wallet,
@@ -129,7 +138,7 @@ class Send extends Component {
 
 
                     <View style={styles.buttonWrapper}>
-                        <Button style={styles.button} onPress={this._onPress.bind(this)}>
+                        <Button style={styles.button} containerStyle={{flex:1}} onPress={this._onPress.bind(this)}>
                             Send
                         </Button>
                     </View>
@@ -173,7 +182,8 @@ const styles = StyleSheet.create({
         height: 45
     },
     button: {
-        color: 'white'
+        color: 'white',
+        flex: 1
     },
     loading: {
         top: (height - 80 - 64) / 2
