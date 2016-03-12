@@ -11,10 +11,11 @@ export const toast = createAction(types.TOAST, (text, timeout)=> {
 });
 
 
-export const openUnlock = createAction(types.OPEN_UNLOCK, (resolved, rejected)=> {
+export const openUnlock = createAction(types.OPEN_UNLOCK, ({resolved, rejected, showSwitch=true})=> {
     return {
         resolved,
-        rejected
+        rejected,
+        showSwitch
     }
 });
 

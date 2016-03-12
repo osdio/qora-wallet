@@ -35,6 +35,12 @@ export default function (state = initialState, action) {
                 ...state,
                 ...payload
             };
+        case types.LOCK:
+            return {
+                ...state,
+                seed: null,
+                account: null
+            };
         case types.GET_WALLET_FROM_STORAGE:
             return {
                 ...state,

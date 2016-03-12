@@ -57,4 +57,12 @@ export const decryptWallet = createAction(types.DECRYPTE_WALLET, ({encryptWallet
         return wallet;
     }
     throw 'decryptWallet Error';
+}, ({ resolved, rejected})=> {
+    return {
+        resolved,
+        rejected
+    }
 });
+
+
+export const lock = createAction(types.LOCK);

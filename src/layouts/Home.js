@@ -67,6 +67,27 @@ class Home extends Component {
     }
 
 
+    _unlockPress() {
+        const { actions, wallet } = this.props;
+        if (!wallet.seed) {
+            actions.openUnlock({
+                showSwitch: false,
+                resolved: (pwd)=> {
+                    actions.decryptWallet({
+                        encryptWallet: wallet.encryptWallet,
+                        pwd,
+                        resolved: ()=> actions.toast('解锁成功'),
+                        rejected: ()=> actions.toast('解锁失败')
+                    });
+                }
+            });
+        }
+        else {
+            actions.lock();
+        }
+    }
+
+
     _renderPage(PageComponent, name) {
         return (
             <View ref={view=>this._tabs[name]=view} key={name} style={styles.baseScene}>
@@ -146,7 +167,7 @@ class Home extends Component {
         if (this.props.accountUI.getAddressBalancePending) {
             return (
                 <View style={{ flex:1, flexDirection:'row', justifyContent:'flex-end' }}>
-                    <Spinner styleAttr="Small"  color="white"/>
+                    <Spinner styleAttr="Small" color="white"/>
                 </View>
             )
         }
@@ -155,9 +176,12 @@ class Home extends Component {
 
 
     render() {
+        const { wallet } = this.props;
         return (
             <View style={ styles.container }>
                 <Nav renderRightItem={ this._renderNavLoading.bind(this) }
+                     leftIcon={ wallet.seed ? 'unlocked' : 'locked' }
+                     leftPress={this._unlockPress.bind(this)}
                      center={ tabNameMapToTitle[this.state.selected] }/>
                 { this.pages.map(page => page.component) }
                 <Tabs selected={this.state.selected} style={ styles.tabs }
@@ -219,7 +243,8 @@ export const LayoutComponent = Home;
 export function mapStateToProps(state) {
     return {
         transaction: state.transaction,
-        accountUI: state.accountUI
+        accountUI: state.accountUI,
+        wallet: state.wallet
     };
 }
 

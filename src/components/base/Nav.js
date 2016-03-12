@@ -13,13 +13,17 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const { height, width } = Dimensions.get('window');
 const statusBarHeight = Platform.OS === 'ios' ? 20 : 0;
 const navHeight = statusBarHeight + 45;
-const iconSize = 30;
+const iconSize = 24;
 
 
 class Nav extends Component {
     _renderItem(item) {
         if (this.props.renderRightItem && item === 'right') {
             return this.props.renderRightItem();
+        }
+
+        if (this.props.renderLeftItem && item === 'left') {
+            return this.props.renderLeftItem();
         }
 
 
