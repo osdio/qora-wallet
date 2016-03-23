@@ -12,7 +12,6 @@ Current, this project is in development.
 
 ```
 npm i 
-
 ```
 
 ### Run
