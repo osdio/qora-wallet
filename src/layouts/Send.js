@@ -5,14 +5,15 @@ import React, {
     StyleSheet,
     TextInput,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    Text
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Button from '../components/base/Button';
 import Loading from '../components/base/Loading';
 
 
-const { height, width } = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 const mapResultToStatus = {
     1: 'VALIDATE_OK',
@@ -47,8 +48,8 @@ class Send extends Component {
 
     _onPress() {
         if (this.sending) return;
-        const { actions } = this.props;
-        const { amount, fee, recipient } = this.state;
+        const {actions} = this.props;
+        const {amount, fee, recipient} = this.state;
 
         if (!recipient) {
             return actions.toast('地址不能为空');
@@ -98,6 +99,14 @@ class Send extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.form}>
+                    <View style={styles.balance}>
+                        <Text>
+                            余额:
+                        </Text>
+                        <Text>
+                            { this.props.balance }
+                        </Text>
+                    </View>
                     <View>
                         <TextInput
                             style={[styles.input, styles.recipientInput ]}
@@ -183,6 +192,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 15,
         top: (40 - 30) / 2
+    },
+    balance: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 });
 
@@ -190,7 +203,8 @@ const styles = StyleSheet.create({
 export const LayoutComponent = Send;
 export function mapStateToProps(state) {
     return {
-        transactionUI: state.transactionUI
+        transactionUI: state.transactionUI,
+        balance: state.account.balance
     };
 }
 
