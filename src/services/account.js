@@ -1,4 +1,3 @@
-import * as storage from './storage';
 import * as req from './request';
 
 
