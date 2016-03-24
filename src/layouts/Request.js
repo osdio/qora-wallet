@@ -6,7 +6,8 @@ import React, {
     TextInput,
     Dimensions,
     TouchableOpacity,
-    Text
+    Text,
+    Clipboard
 } from 'react-native';
 import QRCode from 'react-native-qrcode';
 
@@ -16,6 +17,7 @@ const {height, width} = Dimensions.get('window');
 
 class Request extends Component {
     render() {
+        const { address, balance, actions } = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.form}>
@@ -24,18 +26,29 @@ class Request extends Component {
                             余额:
                         </Text>
                         <Text onPress={()=> this.setState({
-                            amount: (this.props.balance - 10).toString() || ''}
+                            amount: (balance - 10).toString() || ''}
                         )}>
-                            { this.props.balance }
+                            { balance }
                         </Text>
                     </View>
 
 
-                    <QRCode
-                        value={this.props.balance}
-                        size={200}
-                        bgColor='purple'
-                        fgColor='white'/>
+                    <View style={styles.qrWrapper}>
+                        <QRCode
+                            value={address}
+                            size={200}
+                            bgColor='#4845aa'
+                            fgColor='white'/>
+                    </View>
+
+                    <TouchableOpacity onPress={()=>{
+                        Clipboard.setString(address);
+                        actions.toast('Copied')
+                    }}>
+                        <Text style={styles.address}>
+                            { address }
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -50,45 +63,21 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     form: {
-        height: 40 * 4 + 70,
+        height: 40 * 7 + 70,
         flexDirection: 'column',
         justifyContent: 'space-around',
         padding: 20
     },
-    input: {
-        height: 40,
-        borderColor: 'rgba(0,0,0,0.3)',
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingLeft: 10,
-        paddingRight: 10
-    },
-    recipientInput: {
-        paddingRight: 60
-    },
-    buttonWrapper: {
-        backgroundColor: '#4845aa',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 5,
-        height: 45
-    },
-    button: {
-        color: 'white',
-        flex: 1
-    },
-    loading: {
-        top: (height - 80 - 64) / 2
-    },
-    cameraBtn: {
-        position: 'absolute',
-        right: 15,
-        top: (40 - 30) / 2
-    },
     balance: {
         flexDirection: 'row',
         justifyContent: 'space-between'
+    },
+    qrWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    address: {
+        textAlign: 'center'
     }
 });
 
@@ -97,7 +86,8 @@ export const LayoutComponent = Request;
 export function mapStateToProps(state) {
     return {
         transactionUI: state.transactionUI,
-        balance: parseFloat(state.account.balance)
+        balance: parseFloat(state.account.balance),
+        address: state.account.address
     };
 }
 
