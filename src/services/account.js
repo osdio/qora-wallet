@@ -29,3 +29,14 @@ export function getAddressByName(name) {
             throw data;
         });
 }
+
+
+export function getNameListByAddress(address) {
+    return req.post('/index/api.html', {
+            type: 'get',
+            apiurl: `/transactions/unconfirmedof/${address}`
+        })
+        .then(data=> {
+            console.log(data);
+        });
+}
