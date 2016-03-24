@@ -50,14 +50,20 @@ class Send extends Component {
         if (this.sending) return;
         const {actions} = this.props;
         const {amount, fee, recipient} = this.state;
+        const {toast} = actions;
 
         if (!recipient) {
-            return actions.toast('地址不能为空');
+            return toast('地址不能为空');
         }
 
         if (!amount) {
-            return actions.toast('数量不能为空');
+            return toast('数量不能为空');
         }
+
+        if (parseInt(this.props.balance) - 10 < amount) {
+            return toast('您的余额不足');
+        }
+
 
         this.sending = true;
 
