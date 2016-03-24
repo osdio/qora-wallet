@@ -4,6 +4,7 @@ import * as Send from './Send';
 import * as Home from './Home';
 import * as QRCode from './QRCode';
 import * as RegisterName from './RegisterName';
+import * as Request from './Request';
 
 
 export default {
@@ -12,6 +13,7 @@ export default {
     EncryptWallet,
     Send,
     QRCode,
-    RegisterName
+    RegisterName,
+    Request
 }
 

@@ -135,10 +135,14 @@ class Account extends Component {
 
                 <View key="box-wrapper" style={styles.boxWrapper}>
                     <View style={styles.box}>
-                        <Icon size={40} name="ios-world"/>
-                        <Text style={styles.boxText}>
-                            Name Service
-                        </Text>
+                        <TouchableOpacity onPress={()=> this.props.router.toRequest({back:true})}>
+                            <View style={styles.box}>
+                                <Icon size={40} name="ios-world"/>
+                                <Text style={styles.boxText}>
+                                    Name Service
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.box}>
                         <Icon size={40} name="ios-world"/>

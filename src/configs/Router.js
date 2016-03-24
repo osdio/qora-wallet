@@ -1,4 +1,4 @@
-import React,{
+import React, {
     Navigator
 } from 'react-native';
 import _ from 'lodash';
@@ -6,14 +6,15 @@ import * as CustomSceneConfigs from './sceneConfig';
 import connectComponent from '../utils/connectComponent';
 import Layouts from '../layouts';
 
-const { SceneConfigs } = Navigator;
+const {SceneConfigs} = Navigator;
 
 
 const mapComponentNameToTitle = {
     EncryptWallet: 'Encrypt Wallet',
     Send: 'Send Qora',
     QRCode: 'Scan',
-    RegisterName:'Register Name'
+    RegisterName: 'Register Name',
+    Request: 'Request Qora'
 };
 
 
