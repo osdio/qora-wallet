@@ -5,13 +5,11 @@ import React,{
     Component,
     Dimensions,
     Platform,
-    TouchableOpacity
+    TouchableOpacity,
+    Vibration
 } from 'react-native';
 import Camera from 'react-native-camera';
 import BarcodeScanner from 'react-native-barcodescanner';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Vibration from 'react-native-vibration';
-import OverlayButton from '../components/base/OverlayButton';
 
 
 const { height, width } = Dimensions.get('window');
