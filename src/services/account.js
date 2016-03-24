@@ -34,9 +34,17 @@ export function getAddressByName(name) {
 export function getNameListByAddress(address) {
     return req.post('/index/api.html', {
             type: 'get',
-            apiurl: `/transactions/unconfirmedof/${address}`
+            apiurl: `names/address/${address}`
         })
         .then(data=> {
             console.log(data);
         });
+}
+
+
+export async function getUnconfirmedTransaction(address) {
+    return req.get('/index/api.html', {
+        type: 'get',
+        apiurl: `transactions/unconfirmedof/${address}`
+    })
 }
