@@ -14,7 +14,7 @@ import moment from 'moment';
 import Spinner from '../components/base/Spinner';
 
 
-const { height, width } = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 
 class Account extends Component {
@@ -24,10 +24,10 @@ class Account extends Component {
 
 
     componentDidMount() {
-        const { actions, account } = this.props;
+        const {actions, account} = this.props;
         actions.getWalletFormStorage({
             resolved: ()=> {
-                actions.getAccountFromStorage(({ address })=> {
+                actions.getAccountFromStorage(({address})=> {
                     actions.getBalance(address);
                 });
             },
@@ -66,18 +66,18 @@ class Account extends Component {
 
 
     _onRefresh() {
-        this.props.actions.update();
+        this.props.actions.update('pullRefresh');
     }
 
 
     render() {
-        const { lastBlock={}, balance={} } = this.props.account;
+        const {lastBlock={}, balance={}} = this.props.account;
 
         return (
             <ScrollView style={styles.container}
                         refreshControl={
                               <RefreshControl
-                                refreshing={this.props.accountUI.getAddressBalancePending}
+                                refreshing={this.props.accountUI.pullRefreshPending}
                                 onRefresh={this._onRefresh.bind(this)}
                                 tintColor="#4845aa"
                                 title="Loading..."
@@ -112,10 +112,12 @@ class Account extends Component {
                     </View>
 
                     <View style={styles.wallItem}>
-                        <Icon name="arrow-swap" size={45} style={styles.wallItemText}/>
-                        <Text style={styles.wallItemText}>
-                            收款
-                        </Text>
+                        <TouchableOpacity onPress={()=> this.props.router.toRegisterName({back:true})}>
+                            <Icon name="arrow-swap" size={45} style={styles.wallItemText}/>
+                            <Text style={styles.wallItemText}>
+                                收款
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View key="sub-wall" style={styles.subWall}>

@@ -33,8 +33,8 @@ function removeDeadTransaction(arr) {
 
 
 export default function (state = initialState, action) {
-    const { payload = {}, meta = {}, error } = action;
-    const { sequence = {} } = meta;
+    const {payload = {}, meta = {}, error} = action;
+    const {sequence = {}} = meta;
 
 
     if (sequence.type === 'start' || error) {
@@ -50,6 +50,7 @@ export default function (state = initialState, action) {
 
     switch (action.type) {
         case types.SEND:
+        case types.REGISTER_NAME:
             if (typeof payload === 'object' && sequence.type === 'next' && payload.signature) {
                 return {
                     ...state,
@@ -59,7 +60,7 @@ export default function (state = initialState, action) {
             return state;
         case types.SYNC_TX_INFO:
             removeDeadTransaction(state.unconfirmedTransaction);
-            let { transaction={} } = payload;
+            let {transaction={}} = payload;
             let index = indexOf(transaction, state.unconfirmedTransaction);
             if (index > -1) {
                 if (transaction.confirmations > 0) {

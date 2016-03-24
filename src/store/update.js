@@ -7,13 +7,13 @@ const defaultIntervalTime = 10 * 1000;
 
 
 export default ({dispatch, getState}) => next => action => {
-    const { account, transaction } = getState();
-    const { address } = account;
-    const { unconfirmedTransaction } = transaction;
-
+    const {account, transaction} = getState();
+    const {address} = account;
+    const {unconfirmedTransaction} = transaction;
+    const {meta = {}} = action;
 
     if (action.type === 'UPDATE') {
-        dispatch(accountAction.getBalance(address));
+        dispatch(accountAction.getBalance(address, meta.type));
 
         if (unconfirmedTransaction.length) {
             if (typeof startUpdate === 'undefined') {

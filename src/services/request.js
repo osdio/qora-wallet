@@ -67,8 +67,9 @@ export function post(url, body, options = {}) {
 
     let uri = urlPrefix + url;
 
-    if(__DEV__){
+    if (__DEV__) {
         console.info(`POST: ${uri}`);
+        console.info(`body:`, body)
     }
 
     return fetch(uri, {

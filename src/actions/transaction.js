@@ -1,16 +1,24 @@
 import * as types from '../constants/ActionTypes';
-import { createAction } from 'redux-actions';
+import {createAction} from 'redux-actions';
 import * as transactionService from '../services/transaction';
 import * as storageService from '../services/storage';
 
 
-export const send = createAction(types.SEND, (args)=> {
-    return args;
-}, ()=> {
-    return {
-        unlock: 'transaction'
-    }
-});
+function TransactionActionCreator(actionType) {
+    return createAction(actionType, (args)=> {
+        return args;
+    }, ()=> {
+        return {
+            unlock: 'transaction'
+        }
+    });
+}
+
+
+export const send = TransactionActionCreator(types.SEND);
+
+
+export const registerName = TransactionActionCreator(types.REGISTER_NAME);
 
 
 export const getTxInfo = createAction(types.GET_TX_INFO, transactionService.getTxInfo);

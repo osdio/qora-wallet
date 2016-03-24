@@ -7,7 +7,7 @@ const options = {metaType: 'form'};
 export function getLastReference(address) {
     return req.post('/index/api.html', {
             type: 'get',
-            apiurl: encodeURI('/addresses/lastreference/' + address)
+            apiurl: encodeURI(`/addresses/lastreference/${address}/unconfirmed`)
         }, options)
         .then((data)=> {
             if (data.type === 'success') {

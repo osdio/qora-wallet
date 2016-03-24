@@ -1,5 +1,5 @@
 import qora from 'qora-core';
-import { createAction } from 'redux-actions';
+import {createAction} from 'redux-actions';
 import * as walletActions from '../actions/wallet';
 import * as utilsActions from '../actions/utils';
 import * as types from '../constants/ActionTypes';
@@ -42,19 +42,24 @@ function findUnconfirmedLastReference(arr) {
 }
 
 
-export default ({ dispatch, getState })=> next => action => {
-    const { account, transaction, wallet } = getState();
-    const { unconfirmedTransaction } = transaction;
-    const { meta={}, payload={}, error } = action;
-    const { unlock } = meta;
+export default ({dispatch, getState})=> next => action => {
+    const {account, transaction, wallet} = getState();
+    const {unconfirmedTransaction} = transaction;
+    const {meta={}, payload={}, error} = action;
+    const {unlock} = meta;
+
+    if (__DEV__) {
+        console.log(action);
+    }
 
     next(action);
+
 
     if (!unlock || error) return;
 
 
     if (unlock === 'transaction') {
-        const { address } = account;
+        const {address} = account;
         dispatch(createAction(action.type, async()=> {
             let txRaw;
 
@@ -67,8 +72,9 @@ export default ({ dispatch, getState })=> next => action => {
             const lastReference = await getLastReference(address, unconfirmedTransaction);
 
 
+            // send qora
             if (action.type === types.SEND) {
-                const { fee, recipient, amount } = payload;
+                const {fee, recipient, amount} = payload;
                 txRaw = qora.transaction.generatePaymentTransactionRaw({
                     seed,
                     lastReference,
@@ -77,6 +83,22 @@ export default ({ dispatch, getState })=> next => action => {
                     fee
                 });
             }
+
+
+            // register name
+            if (action.type === types.REGISTER_NAME) {
+                const {fee, name, value} = payload;
+                txRaw = qora.transaction.generateRegisterNameTransactionRaw({
+                    seed,
+                    lastReference,
+                    name,
+                    value,
+                    fee,
+                    owner: address
+                });
+            }
+
+
             return await transactionService.processTx(txRaw);
         }, ({resolved, rejected})=> {
             return {

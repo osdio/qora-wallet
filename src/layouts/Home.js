@@ -165,7 +165,7 @@ class Home extends Component {
 
 
     _renderNavLoading() {
-        if (this.props.accountUI.getAddressBalancePending) {
+        if (this.props.accountUI.getAddressBalancePending || this.props.accountUI.pullRefreshPending) {
             return (
                 <View style={{ flex:1, flexDirection:'row', justifyContent:'flex-end' }}>
                     <Spinner styleAttr="Small" color="white"/>
