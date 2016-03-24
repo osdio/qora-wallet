@@ -60,7 +60,7 @@ class Send extends Component {
             return toast('数量不能为空');
         }
 
-        if (parseInt(this.props.balance) - 10 < amount) {
+        if (this.props.balance - 10 < amount) {
             return toast('您的余额不足');
         }
 
@@ -109,7 +109,9 @@ class Send extends Component {
                         <Text>
                             余额:
                         </Text>
-                        <Text>
+                        <Text onPress={()=> this.setState({
+                            amount: (this.props.balance - 10).toString() || ''}
+                        )}>
                             { this.props.balance }
                         </Text>
                     </View>
@@ -210,7 +212,7 @@ export const LayoutComponent = Send;
 export function mapStateToProps(state) {
     return {
         transactionUI: state.transactionUI,
-        balance: state.account.balance
+        balance: parseFloat(state.account.balance)
     };
 }
 
