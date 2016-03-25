@@ -14,7 +14,15 @@ const mapComponentNameToTitle = {
     Send: 'Send Qora',
     QRCode: 'Scan',
     RegisterName: 'Register Name',
-    Request: 'Request Qora'
+    Request: 'Request Qora',
+    Name: 'Name Service'
+};
+
+
+const mapComponentNameToNav = {
+    Name: {
+        rightIcon: 'plus-round'
+    }
 };
 
 
@@ -22,11 +30,13 @@ class Router {
     constructor(navigator) {
         this.navigator = navigator;
         Object.keys(Layouts).forEach(key=> {
+            let nav = mapComponentNameToNav[key] || {};
             this[`to${key}`] = (props)=> {
                 this.push(props, {
                     name: key,
                     component: Layouts[key],
-                    center: mapComponentNameToTitle[key]
+                    center: mapComponentNameToTitle[key],
+                    ...nav
                 })
             };
         });

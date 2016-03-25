@@ -8,7 +8,7 @@ import React, {
 } from 'react-native';
 import Nav from './Nav';
 
-const { height, width } = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 
 const statusBarHeight = Platform.OS === 'ios' ? 20 : 0;
@@ -29,19 +29,18 @@ class Scene extends Component {
     render() {
         var style = {};
         if (this.props.showNav) {
-            style = {
-                height: height - navHeight
-            }
-        }
-        else {
-            style = {
-                flex: 1
-            }
+            return (
+                <View style={ [styles.container] }>
+                    <Nav {...this.props}/>
+                    <View style={{height: height-navHeight}}>
+                        { this.props.children }
+                    </View>
+                </View>
+            )
         }
 
         return (
-            <View style={ [styles.container, style] }>
-                { this.props.showNav && <Nav {...this.props}/>}
+            <View style={ [styles.container] }>
                 { this.props.children }
             </View>
         )
@@ -50,7 +49,9 @@ class Scene extends Component {
 
 
 const styles = StyleSheet.create({
-    container: {}
+    container: {
+        flex: 1
+    }
 });
 
 

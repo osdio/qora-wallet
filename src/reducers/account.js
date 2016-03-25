@@ -4,13 +4,14 @@ import * as types from '../constants/ActionTypes';
 const initialState = {
     address: null,
     balance: 0,
-    lastBlock: {}
+    lastBlock: {},
+    nameList: []
 };
 
 
 export default function (state = initialState, action) {
-    const { payload = {}, meta = {}, error } = action;
-    const { sequence = {} } = meta;
+    const {payload = {}, meta = {}, error} = action;
+    const {sequence = {}} = meta;
 
 
     if (sequence.type === 'start' || error) {
@@ -30,7 +31,7 @@ export default function (state = initialState, action) {
                 ...payload
             };
         case types.GET_BANLANCE:
-            let { balance={} } = payload;
+            let {balance={}} = payload;
             let amount = balance[0] && balance[0].amount || 0;
             return {
                 ...state,
@@ -38,10 +39,15 @@ export default function (state = initialState, action) {
                 lastBlock: payload.lastBlock
             };
         case types.SYNC_TX_INFO:
-            let { lastBlock={} } = payload;
+            let {lastBlock={}} = payload;
             return {
                 ...state,
                 lastBlock
+            };
+        case types.GET_NAME_LIST_BY_ADDRESS:
+            return {
+                ...state,
+                nameList: payload
             };
         default:
             return state;

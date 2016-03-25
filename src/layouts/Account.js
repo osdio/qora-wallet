@@ -112,7 +112,9 @@ class Account extends Component {
                     </View>
 
                     <View style={styles.wallItem}>
-                        <TouchableOpacity  onPress={()=> this.props.router.toRequest({back:true})}>
+                        <TouchableOpacity onPress={()=> this.props.router.toRequest({
+                            back:true
+                        })}>
                             <Icon name="arrow-swap" size={45} style={styles.wallItemText}/>
                             <Text style={styles.wallItemText}>
                                 收款
@@ -135,7 +137,10 @@ class Account extends Component {
 
                 <View key="box-wrapper" style={styles.boxWrapper}>
                     <View style={styles.box}>
-                        <TouchableOpacity onPress={()=> this.props.router.toRegisterName({back:true})}>
+                        <TouchableOpacity onPress={()=> this.props.router.toName({
+                            back:true,
+                            showNav: false
+                        })}>
                             <View style={styles.box}>
                                 <Icon size={40} name="ios-world"/>
                                 <Text style={styles.boxText}>

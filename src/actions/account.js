@@ -40,9 +40,13 @@ export const update = (type)=> {
 export const startUpdate = createAction(types.START_UPDATE);
 
 
-export const getAddressByName = createAction(types.GET_ADDRESS_BY_NAME, async()=> {
+export const getAddressByName = createAction(types.GET_ADDRESS_BY_NAME, accountService.getAddressByName);
 
-});
+
+export const getNameListByAddress = createAction(types.GET_NAME_LIST_BY_ADDRESS, accountService.getNameListByAddress);
+
+
+export const getUnconfirmedTransactionList = createAction(types.GET_UNCONFIRMED_TRANSACTION_LIST, accountService.getUnconfirmedTransactionList);
 
 
 

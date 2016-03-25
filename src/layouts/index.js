@@ -5,6 +5,7 @@ import * as Home from './Home';
 import * as QRCode from './QRCode';
 import * as RegisterName from './RegisterName';
 import * as Request from './Request';
+import * as Name from './Name';
 
 
 export default {
@@ -14,6 +15,7 @@ export default {
     Send,
     QRCode,
     RegisterName,
-    Request
+    Request,
+    Name
 }
 

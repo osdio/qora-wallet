@@ -1,4 +1,3 @@
-import qora from 'qora-core';
 import * as req from './request';
 
 const options = {metaType: 'form'};

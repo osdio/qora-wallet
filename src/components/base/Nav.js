@@ -10,13 +10,16 @@ import React, {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const { height, width } = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 const statusBarHeight = Platform.OS === 'ios' ? 20 : 0;
 const navHeight = statusBarHeight + 45;
-const iconSize = 24;
+const iconSize = 22;
 
 
 class Nav extends Component {
+    static navHeight = navHeight;
+
+
     _renderItem(item) {
         if (this.props.renderRightItem && item === 'right') {
             return this.props.renderRightItem();
@@ -32,7 +35,7 @@ class Nav extends Component {
                 <TouchableOpacity onPress={()=>{
                     this.props.router.pop();
                 }}>
-                    <Icon name='ios-arrow-back' size={iconSize} style={[styles.icon, styles[`${item}Icon`]]}/>
+                    <Icon name='chevron-left' size={iconSize} style={[styles.icon, styles[`${item}Icon`]]}/>
                 </TouchableOpacity>
             )
         }
@@ -108,7 +111,10 @@ const styles = StyleSheet.create({
         paddingLeft: 15
     },
     rightInner: {
-        paddingRight: 15
+        paddingRight: 15,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
     },
     itemText: {
         color: 'white',
