@@ -2,8 +2,11 @@ import * as types from '../constants/ActionTypes';
 
 
 const initialState = {
-    unconfirmedTransaction: []
+    unconfirmedTransaction: [],
+    recentConfirmedTransaction: []
 };
+
+const requiredConfirmedNum = 1;
 
 
 function indexOf(item, arr) {
@@ -63,7 +66,7 @@ export default function (state = initialState, action) {
             let {transaction={}} = payload;
             let index = indexOf(transaction, state.unconfirmedTransaction);
             if (index > -1) {
-                if (transaction.confirmations > 0) {
+                if (transaction.confirmations >= requiredConfirmedNum) {
                     state.unconfirmedTransaction.splice(index, 1);
                 }
                 else {
@@ -83,6 +86,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 ...payload
+            };
+        case types.GET_UNCONFIRMED_TRANSACTION_LIST:
+            return {
+                ...state,
+                unconfirmedTransaction: payload
             };
         default:
             return state;

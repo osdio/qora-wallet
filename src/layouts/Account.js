@@ -29,6 +29,7 @@ class Account extends Component {
             resolved: ()=> {
                 actions.getAccountFromStorage(({address})=> {
                     actions.getBalance(address);
+                    actions.getUnconfirmedTransactionList(address);
                 });
             },
             rejected: ()=> {
@@ -124,7 +125,7 @@ class Account extends Component {
                 </View>
                 <View key="sub-wall" style={styles.subWall}>
                     <Text style={styles.balance}>
-                        { balance}
+                        { parseFloat(balance) }
                     </Text>
                 </View>
 
