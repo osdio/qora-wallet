@@ -1,8 +1,6 @@
-import qora from 'qora-core';
 import * as types from '../constants/ActionTypes';
 import {createAction} from 'redux-actions';
 import * as transactionService from '../services/transaction';
-import * as accountService from '../services/account';
 import * as storageService from '../services/storage';
 
 
