@@ -1,10 +1,12 @@
+import qora from 'qora-core';
 import * as types from '../constants/ActionTypes';
 import {createAction} from 'redux-actions';
 import * as transactionService from '../services/transaction';
+import * as accountService from '../services/account';
 import * as storageService from '../services/storage';
 
 
-function TransactionActionCreator(actionType) {
+function transactionActionCreator(actionType) {
     return createAction(actionType, (args)=> {
         return args;
     }, ()=> {
@@ -15,10 +17,10 @@ function TransactionActionCreator(actionType) {
 }
 
 
-export const send = TransactionActionCreator(types.SEND);
+export const send = transactionActionCreator(types.SEND);
 
 
-export const registerName = TransactionActionCreator(types.REGISTER_NAME);
+export const registerName = transactionActionCreator(types.REGISTER_NAME);
 
 
 export const getTxInfo = createAction(types.GET_TX_INFO, transactionService.getTxInfo);

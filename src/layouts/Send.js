@@ -63,9 +63,14 @@ class Send extends Component {
                     actions.toast(`发送失败[${mapHttpResultToStatus[result]}]`)
                 }
             },
-            rejected: ()=> {
+            rejected: (err)=> {
                 this.sending = false;
-                actions.toast('发送失败');
+                if (err && err.msg) {
+                    actions.toast(err.msg);
+                }
+                else{
+                    actions.toast('发送失败');
+                }
             }
         });
     }

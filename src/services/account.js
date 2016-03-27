@@ -2,6 +2,9 @@ import * as req from './request';
 
 function filterData(data) {
     if (data.type === 'success') {
+        if(__DEV__){
+            console.log(data.result);
+        }
         return JSON.parse(data.result);
     }
     throw data;
@@ -27,7 +30,7 @@ export function getBalanceByAddress(address) {
 export function getAddressByName(name) {
     return req.post('/index/api.html', {
             type: 'get',
-            apiurl: `/names/${name}`
+            apiurl: `/names/${name.toLowerCase()}`
         }, {metaType: 'form'})
         .then(filterData);
 }

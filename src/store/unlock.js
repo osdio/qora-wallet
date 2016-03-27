@@ -3,6 +3,7 @@ import {createAction} from 'redux-actions';
 import * as utilsActions from '../actions/utils';
 import * as types from '../constants/ActionTypes';
 import * as transactionService from '../services/transaction';
+import * as accountService from '../services/account';
 
 
 async function getWalletSeed(wallet, openUnlock) {
@@ -31,6 +32,23 @@ async function getLastReference(address, unconfirmedTransaction) {
         lastReference = unconfirmedTransaction[0].signature;
     }
     return lastReference;
+}
+
+
+async function getAddressByRecipient(recipient) {
+    if (qora.core.getAccountAddressType(recipient) === 'standard') {
+        return recipient;
+    }
+
+    try {
+        let result = await accountService.getAddressByName(recipient);
+        if (result && result.owner) {
+            return result.owner
+        }
+    }
+    catch (err) {
+        return null;
+    }
 }
 
 
@@ -73,7 +91,13 @@ export default ({dispatch, getState})=> next => action => {
 
             // send qora
             if (action.type === types.SEND) {
-                const {fee, recipient, amount} = payload;
+                let {fee, recipient, amount} = payload;
+                recipient = await getAddressByRecipient(recipient);
+                if (!recipient) {
+                    throw {
+                        msg: '地址错误或者没有找到name相对应的地址'
+                    };
+                }
                 txRaw = qora.transaction.generatePaymentTransactionRaw({
                     seed,
                     lastReference,
