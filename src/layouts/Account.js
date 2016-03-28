@@ -153,19 +153,19 @@ class Account extends Component {
                     <View style={styles.box}>
                         <Icon size={40} name="ios-world"/>
                         <Text style={styles.boxText}>
-                            Name Service
+                            Blog Service
                         </Text>
                     </View>
                     <View style={styles.box}>
                         <Icon size={40} name="ios-world"/>
                         <Text style={styles.boxText}>
-                            Name Service
+                            Block Explore
                         </Text>
                     </View>
                     <View style={styles.box}>
                         <Icon size={40} name="ios-world"/>
                         <Text style={styles.boxText}>
-                            Name Service
+                            Message Service
                         </Text>
                     </View>
                 </View>
