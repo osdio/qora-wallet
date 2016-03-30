@@ -151,19 +151,19 @@ class Account extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.box}>
-                        <Icon size={40} name="ios-world"/>
+                        <Icon size={40} name="ios-compose"/>
                         <Text style={styles.boxText}>
                             Blog Service
                         </Text>
                     </View>
                     <View style={styles.box}>
-                        <Icon size={40} name="ios-world"/>
+                        <Icon size={40} name="stats-bars"/>
                         <Text style={styles.boxText}>
                             Block Explore
                         </Text>
                     </View>
                     <View style={styles.box}>
-                        <Icon size={40} name="ios-world"/>
+                        <Icon size={40} name="ios-email-outline"/>
                         <Text style={styles.boxText}>
                             Message Service
                         </Text>
