@@ -6,8 +6,16 @@ import utilsMiddleware from './utilsMiddleware';
 import syncReducerToAsyncStorage from './syncReducerToAsyncStorage';
 import updateMiddleware from './update';
 import unlockMiddleware from './unlock';
-import logger from 'redux-logger';
+import createLogger from 'redux-logger';
 import reducers from '../reducers';
+
+
+const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
+const logger = createLogger({
+    predicate: (getState, action) => isDebuggingInChrome,
+    collapsed: true,
+    duration: true
+});
 
 
 var middlewares = [
@@ -21,15 +29,28 @@ var middlewares = [
 ];
 
 
-if (__DEV__) {
-    middlewares.push(logger());
+if (isDebuggingInChrome) {
+    middlewares.push(logger);
 }
 
 
 export default function configureStore(initialState) {
-    return applyMiddleware(
+    const store = applyMiddleware(
         ...middlewares
     )(createStore)(reducers, initialState);
+
+    if (module.hot) {
+        module.hot.accept(() => {
+            const nextRootReducer = require('../reducers/index').default;
+            store.replaceReducer(nextRootReducer);
+        });
+    }
+
+    if (isDebuggingInChrome) {
+        window.store = store;
+    }
+
+    return store;
 }
 
 

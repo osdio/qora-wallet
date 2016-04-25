@@ -3,7 +3,7 @@ const baseConfig = {
 };
 
 const devConfig = {
-    domain: 'http://mirror.qora.co.in:8090'
+    domain: 'http://188.166.16.64:8090'
 };
 
 
