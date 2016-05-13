@@ -2,15 +2,16 @@
   "name": "bapp",
   "version": "0.1.0",
   "scripts": {
-      "start": "node node_modules/react-native/local-cli/cli.js start",
-      "android": "node node_modules/react-native/local-cli/cli.js run-android",
-      "ios": "node node_modules/react-native/local-cli/cli.js run-ios",
-      "log": "adb logcat *:S ReactNative:V ReactNativeJS:V",
-      "build-ios": "react-native unbundle --entry-file index.ios.js --platform ios --dev false",
-      "build-android": "cd android && ./gradlew assembleRelease && cd .."
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "android": "node node_modules/react-native/local-cli/cli.js run-android",
+    "ios": "node node_modules/react-native/local-cli/cli.js run-ios",
+    "log": "adb logcat *:S ReactNative:V ReactNativeJS:V",
+    "build-ios": "react-native unbundle --entry-file index.ios.js --platform ios --dev false",
+    "build-android": "cd android && ./gradlew assembleRelease && cd .."
   },
   "dependencies": {
     "bs58": "^3.0.0",
+    "flux-standard-action": "^0.6.1",
     "moment": "^2.12.0",
     "qora-core": "^0.1.8",
     "query-string": "^3.0.3",
