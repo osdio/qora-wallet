@@ -16,8 +16,14 @@ const {height, width} = Dimensions.get('window');
 
 
 class Request extends Component {
+    _onCopyAddrPress() {
+        const {address, actions} = this.props;
+        Clipboard.setString(address);
+        actions.toast('Copied')
+    }
+
     render() {
-        const { address, balance, actions } = this.props;
+        const {address, balance, actions} = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.form}>
@@ -34,17 +40,16 @@ class Request extends Component {
 
 
                     <View style={styles.qrWrapper}>
-                        <QRCode
-                            value={address}
-                            size={200}
-                            bgColor='#4845aa'
-                            fgColor='white'/>
+                        <TouchableOpacity onPress={this._onCopyAddrPress.bind(this)}>
+                            <QRCode
+                                value={address}
+                                size={200}
+                                bgColor='#4845aa'
+                                fgColor='white'/>
+                        </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity onPress={()=>{
-                        Clipboard.setString(address);
-                        actions.toast('Copied')
-                    }}>
+                    <TouchableOpacity onPress={this._onCopyAddrPress.bind(this)}>
                         <Text style={styles.address}>
                             { address }
                         </Text>
