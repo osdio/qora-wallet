@@ -6,7 +6,9 @@
 
 Current, this project is in development. 
 
-## Development
+## Development Status
+
+I will put some update later, just see [bitcoinTalk.org](https://bitcointalk.org/index.php?topic=1358722.msg17641724#msg17641724)
 
 ### Install
 
